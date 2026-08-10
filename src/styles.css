@@ -111,11 +111,22 @@ img { display: block; max-width: 100%; }
 .choice-card small { color: var(--muted); }
 .choice-card .choice-card__check { position: absolute; right: 12px; top: 12px; width: 18px; color: var(--green); }
 
+.screening-box { margin-bottom: 14px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px; align-items: center; padding: 15px; border: 1px solid #c9d8df; border-radius: 12px; background: #f8fbfc; }
+.screening-box b { font-size: 14px; }
+.screening-box p { margin: 5px 0 3px; color: #33475d; font-size: 13px; line-height: 1.55; }
+.screening-box small { color: var(--muted); font-size: 11px; }
+.screening-box__choices { display: flex; gap: 7px; }
+.screening-box__choices button { min-height: 44px; padding: 0 12px; border: 1px solid var(--border-dark); border-radius: 9px; background: #fff; color: var(--muted); font-size: 12px; font-weight: 800; cursor: pointer; }
+.screening-box__choices button.is-selected { border-color: var(--green); color: var(--green); background: var(--green-soft); }
+.screening-box__choices button.is-alert { border-color: #d78378; color: #963e35; background: #fff1ef; }
+
 .segmented { display: flex; padding: 4px; background: #edf1f3; border-radius: 12px; gap: 4px; }
 .segmented button { flex: 1; min-height: 45px; border: 0; border-radius: 9px; background: transparent; color: var(--muted); font-size: 13px; font-weight: 700; cursor: pointer; }
 .segmented button.is-selected { background: #fff; color: var(--ink); box-shadow: 0 2px 7px rgba(30, 48, 63, .10); }
+.segmented button:disabled { color: #9ba6ad; cursor: not-allowed; text-decoration: line-through; opacity: .66; }
 .clinical-note { display: flex; align-items: flex-start; gap: 10px; margin-top: 14px; color: var(--blue); background: var(--sky); padding: 12px 14px; border-radius: 10px; font-size: 13px; line-height: 1.55; }
 .clinical-note svg { flex: 0 0 auto; margin-top: 1px; }
+.clinical-note--alert { color: #8e3c33; background: #fff0ee; }
 .confirmation { margin-top: 12px; display: flex; align-items: flex-start; gap: 11px; padding: 14px; border: 1px solid var(--border); border-radius: 11px; cursor: pointer; }
 .confirmation.is-checked { border-color: var(--green); background: var(--green-soft); }
 .confirmation input { position: absolute; opacity: 0; pointer-events: none; }
@@ -199,6 +210,7 @@ img { display: block; max-width: 100%; }
 .qr-result__actions { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
 .qr-result__actions .button { min-height: 40px; padding: 0 10px; font-size: 12px; }
 .qr-result__actions .button--quiet { grid-column: 1 / -1; }
+.qr-result__fallback { grid-column: 1 / -1; margin: -4px 0 0; color: #526477; text-align: center; font-size: 11px; line-height: 1.5; }
 .site-footer { padding: 22px 30px; border-top: 1px solid var(--border); background: #fff; color: var(--muted); text-align: center; font-size: 12px; }
 
 /* Patient prescription */
@@ -240,28 +252,29 @@ img { display: block; max-width: 100%; }
 .instruction-list { margin: 19px 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 13px; }
 .instruction-list li { display: flex; align-items: flex-start; gap: 11px; }
 .instruction-list li > span { width: 25px; height: 25px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 50%; color: var(--green); background: var(--green-soft); font-size: 12px; font-weight: 900; }
-.instruction-list p { margin: 1px 0 0; color: #33475d; line-height: 1.55; font-size: 15px; }
-.key-cue { display: flex; gap: 10px; padding: 13px; border-left: 4px solid #65a4bf; border-radius: 7px; color: #285f77; background: var(--sky); font-size: 13px; line-height: 1.55; }
+.instruction-list p { margin: 1px 0 0; color: #293d53; line-height: 1.7; font-size: 17px; }
+.key-cue { display: flex; gap: 10px; padding: 14px; border-left: 4px solid #65a4bf; border-radius: 7px; color: #285f77; background: var(--sky); font-size: 15px; line-height: 1.65; }
 .key-cue svg { flex: 0 0 auto; margin-top: 1px; }
 .key-cue span { display: flex; flex-direction: column; }
 .timer-card { margin-top: 14px; display: flex; align-items: center; justify-content: space-between; padding: 15px; border-radius: 13px; background: #14243c; color: #fff; }
 .timer-card__time { display: flex; flex-direction: column; gap: 2px; }
-.timer-card__time small { color: #b9c5d3; }
+.timer-card__time small { color: #d0dae4; font-size: 12px; }
 .timer-card__time b { font-variant-numeric: tabular-nums; font-size: 30px; letter-spacing: .02em; }
 .timer-card__controls { display: flex; gap: 7px; }
-.timer-card__controls button { min-height: 45px; padding: 0 14px; display: flex; align-items: center; justify-content: center; gap: 6px; border: 1px solid rgba(255,255,255,.2); border-radius: 10px; color: #fff; background: rgba(255,255,255,.11); cursor: pointer; }
-.timer-card__controls button:last-child { width: 45px; padding: 0; }
+.timer-card__controls button { min-height: 48px; padding: 0 15px; display: flex; align-items: center; justify-content: center; gap: 6px; border: 1px solid rgba(255,255,255,.2); border-radius: 10px; color: #fff; background: rgba(255,255,255,.11); cursor: pointer; }
+.timer-card__controls button:last-child { width: 48px; padding: 0; }
 .timer-card__controls svg { width: 18px; }
 .patient-safety { margin: 0 clamp(16px, 4vw, 30px) 28px; padding: 21px; border-radius: 16px; background: var(--apricot); }
 .patient-safety__title { display: flex; align-items: center; gap: 11px; color: #9a4f29; }
 .patient-safety__title > svg { width: 28px; height: 28px; }
 .patient-safety__title span { font-size: 11px; font-weight: 800; }
 .patient-safety__title h2 { margin: 1px 0 0; font-size: 20px; }
-.patient-safety ul { margin: 15px 0; padding-left: 22px; color: #654536; font-size: 14px; line-height: 1.65; }
-.urgent-note { display: flex; gap: 9px; padding-top: 13px; border-top: 1px solid #e8c0a9; color: #8c352e; font-size: 13px; line-height: 1.55; }
+.patient-safety ul { margin: 15px 0; padding-left: 22px; color: #5b3d31; font-size: 15px; line-height: 1.7; }
+.urgent-note { display: flex; gap: 9px; padding-top: 14px; border-top: 1px solid #e8c0a9; color: #812f29; font-size: 15px; line-height: 1.65; }
 .urgent-note svg { flex: 0 0 auto; }
 .urgent-note span { display: flex; flex-direction: column; }
-.patient-disclaimer { margin: 0 clamp(24px, 5vw, 40px) 30px; color: var(--muted); font-size: 12px; line-height: 1.65; text-align: center; }
+.urgent-note ul { margin: 8px 0 0; color: inherit; font-size: 15px; line-height: 1.65; }
+.patient-disclaimer { margin: 0 clamp(24px, 5vw, 40px) 30px; color: #526477; font-size: 13px; line-height: 1.7; text-align: center; }
 .patient-sticky-action { position: fixed; inset: auto 0 0; z-index: 10; padding: 10px max(16px, calc((100vw - 688px) / 2)) calc(10px + env(safe-area-inset-bottom)); border-top: 1px solid var(--border); background: rgba(255,255,255,.94); backdrop-filter: blur(12px); }
 .patient-sticky-action button { width: 100%; min-height: 55px; display: flex; align-items: center; justify-content: center; gap: 6px; border: 0; border-radius: 13px; color: #fff; background: var(--green); font-weight: 850; cursor: pointer; }
 
@@ -290,6 +303,8 @@ img { display: block; max-width: 100%; }
 
 @media (max-width: 520px) {
   .choice-grid--condition, .safety-options { grid-template-columns: 1fr; }
+  .screening-box { grid-template-columns: 1fr; gap: 12px; }
+  .screening-box__choices button { flex: 1; }
   .segmented { overflow-x: auto; }
   .segmented button { min-width: 108px; padding-inline: 8px; }
   .exercise-row { grid-template-columns: 42px minmax(0, 1fr); padding: 12px; }
@@ -343,6 +358,8 @@ img { display: block; max-width: 100%; }
   .doctor-print-sheet__title p { margin: 0; color: #087455; font-weight: 800; font-size: 11px; }
   .doctor-print-sheet__title h1 { margin: 3px 0; font-size: 25px; }
   .doctor-print-sheet__title span { color: #607086; font-size: 11px; }
+  .doctor-print-sheet__fields { margin-top: 9px; display: flex; gap: 28px; }
+  .doctor-print-sheet__fields span { color: #14243c; font-size: 10px; }
   .doctor-print-sheet__exercises { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
   .doctor-print-sheet__exercises article { break-inside: avoid; padding: 9px; border: 1px solid #d5dfe5; border-radius: 8px; }
   .doctor-print-sheet__exercise-head { display: grid; grid-template-columns: 22px 56px 1fr; align-items: center; gap: 6px; }

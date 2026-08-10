@@ -133,8 +133,8 @@ export const exercises: Exercise[] = [
   {
     id: 'walking', condition: 'low-back', name: '舒適步行', shortName: '步行', image: '/exercises/walking.png',
     summary: '以可對話的速度步行，逐步恢復日常活動。',
-    steps: ['穿合腳的鞋，選擇平坦、安全的路線。', '用自然步幅，以能正常說話的速度前進。', '可分段完成；隔天沒有明顯惡化再漸增。'],
-    keyCue: '不必忍痛完成；時間可拆成數段。',
+    steps: ['穿合腳的鞋，選擇平坦安全的路線；炎熱潮濕時改在室內。', '用自然步幅，以能正常說話的速度前進。', '可分段完成；隔天沒有明顯惡化再漸增。'],
+    keyCue: '天氣太熱就改在室內，並依原醫囑補充水分。若頭暈、噁心或身體異常發熱，立即停止、到陰涼處並找人幫忙。',
     dose: { type: 'duration', minutes: 10, frequency: '每週 5 次' },
   },
 ]

@@ -41,23 +41,48 @@ export function cloneDose(dose: Dose): Dose {
 }
 
 export function encodePrescription(prescription: Prescription): string {
-  const compact = {
-    v: 1,
-    c: prescription.condition === 'shoulder' ? 's' : 'b',
-    s: subtypeCodes[prescription.subtype],
-    e: prescription.exercises.map((item) => item.dose.type === 'reps'
-      ? [exerciseCodes[item.id], 'r', item.dose.reps, item.dose.sets, frequencyCodes[item.dose.frequency]]
-      : [exerciseCodes[item.id], 'm', item.dose.minutes, frequencyCodes[item.dose.frequency]]),
-    d: prescription.createdAt.replace(/-/g, '').slice(2),
-  }
-  const bytes = new TextEncoder().encode(JSON.stringify(compact))
-  let binary = ''
-  bytes.forEach((byte) => { binary += String.fromCharCode(byte) })
-  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+  const condition = prescription.condition === 'shoulder' ? 's' : 'b'
+  const selected = prescription.exercises.map((item) => item.dose.type === 'reps'
+    ? `${exerciseCodes[item.id]}-r-${item.dose.reps}-${item.dose.sets}-${frequencyCodes[item.dose.frequency]}`
+    : `${exerciseCodes[item.id]}-m-${item.dose.minutes}-${frequencyCodes[item.dose.frequency]}`)
+  const date = prescription.createdAt.replace(/-/g, '').slice(2)
+  return `1.${condition}.${subtypeCodes[prescription.subtype]}.${selected.join('~')}.${date}`
 }
 
 export function decodePrescription(payload: string): Prescription | null {
   try {
+    if (payload.startsWith('1.')) {
+      const [version, conditionCode, subtypeCode, exerciseList, dateCode, ...extra] = payload.split('.')
+      if (version !== '1' || extra.length || !exerciseList) return null
+      const condition = conditionCode === 's' ? 'shoulder' : conditionCode === 'b' ? 'low-back' : null
+      const subtype = subtypeIds[subtypeCode]
+      const date = /^\d{6}$/.test(dateCode) ? `20${dateCode.slice(0, 2)}-${dateCode.slice(2, 4)}-${dateCode.slice(4, 6)}` : ''
+      const encodedExercises = exerciseList.split('~')
+      if (!condition || !subtype || !date || encodedExercises.length < 1 || encodedExercises.length > 3) return null
+
+      const selected = encodedExercises.map((encoded) => {
+        const item = encoded.split('-')
+        const id = exerciseIds[item[0]]
+        const frequency = frequencies[item[item.length - 1]] as Dose['frequency'] | undefined
+        if (!id || !frequency) return null
+        if (item[1] === 'r' && item.length === 5) {
+          const reps = Number(item[2])
+          const sets = Number(item[3])
+          if (!Number.isInteger(reps) || reps < 3 || reps > 20 || !Number.isInteger(sets) || sets < 1 || sets > 5) return null
+          return { id, dose: { type: 'reps' as const, reps, sets, frequency } }
+        }
+        if (item[1] === 'm' && item.length === 4) {
+          const minutes = Number(item[2])
+          if (!Number.isInteger(minutes) || minutes < 3 || minutes > 30) return null
+          return { id, dose: { type: 'duration' as const, minutes, frequency } }
+        }
+        return null
+      })
+      if (selected.some((item) => item === null)) return null
+      return { v: 1, condition, subtype, exercises: selected as Prescription['exercises'], createdAt: date, sourceVersion: '2026.08' }
+    }
+
+    // Backward-compatible with the first compact, base64-encoded link format.
     const normalized = payload.replace(/-/g, '+').replace(/_/g, '/')
     const padded = normalized + '='.repeat((4 - normalized.length % 4) % 4)
     const binary = atob(padded)
@@ -106,7 +131,7 @@ export function decodePrescription(payload: string): Prescription | null {
 }
 
 export function prescriptionUrl(prescription: Prescription): string {
-  return `${window.location.origin}${window.location.pathname}?rx=${encodePrescription(prescription)}`
+  return `${window.location.origin}${window.location.pathname}#rx=${encodePrescription(prescription)}`
 }
 
 export function formatDose(dose: Dose): string {

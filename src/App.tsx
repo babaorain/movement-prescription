@@ -31,6 +31,11 @@ import type { ConditionId, Dose, Prescription, SelectedExercise } from './types'
 
 const frequencies = ['每天 1 次', '每天 2 次', '每週 3 次', '每週 5 次'] as const
 
+function localDateStamp(date = new Date()): string {
+  const local = new Date(date.getTime() - date.getTimezoneOffset() * 60_000)
+  return local.toISOString().slice(0, 10)
+}
+
 function Brand({ compact = false }: { compact?: boolean }) {
   return (
     <a className={`brand ${compact ? 'brand--compact' : ''}`} href={window.location.pathname} aria-label="回到動作處方首頁">
@@ -112,25 +117,28 @@ function DoctorBuilder() {
   const [subtypeId, setSubtypeId] = useState('shoulder-high')
   const [selected, setSelected] = useState<SelectedExercise[]>(() => makeSelection('shoulder-high'))
   const [safety, setSafety] = useState<'safe' | 'refer' | null>(null)
+  const [claudication, setClaudication] = useState<'yes' | 'no' | null>(null)
   const [directionConfirmed, setDirectionConfirmed] = useState(false)
   const [generatedUrl, setGeneratedUrl] = useState('')
   const [copied, setCopied] = useState(false)
   const qrAreaRef = useRef<HTMLDivElement>(null)
   const currentSubtype = getSubtype(subtypeId)!
   const conditionSubtypes = subtypes.filter((subtype) => subtype.condition === condition)
-  const availableExercises = exercises.filter((exercise) => exercise.condition === condition)
+  const availableExercises = exercises.filter((exercise) => exercise.condition === condition
+    && !(claudication === 'yes' && ['press-up', 'standing-extension'].includes(exercise.id)))
 
   const currentPrescription: Prescription = useMemo(() => ({
     v: 1,
     condition,
     subtype: subtypeId,
     exercises: selected,
-    createdAt: new Date().toISOString().slice(0, 10),
+    createdAt: localDateStamp(),
     sourceVersion: '2026.08',
   }), [condition, subtypeId, selected])
 
   const ready = safety === 'safe'
     && selected.length >= 1
+    && (condition !== 'low-back' || claudication !== null)
     && (!currentSubtype.needsDirectionalConfirmation || directionConfirmed)
 
   const invalidate = () => {
@@ -143,14 +151,30 @@ function DoctorBuilder() {
     setCondition(next)
     setSubtypeId(firstSubtype.id)
     setSelected(makeSelection(firstSubtype.id))
+    setClaudication(null)
+    setSafety(null)
     setDirectionConfirmed(false)
     invalidate()
   }
 
   const chooseSubtype = (next: string) => {
+    if (next === 'back-extension' && claudication !== 'no') return
     setSubtypeId(next)
     setSelected(makeSelection(next))
     setDirectionConfirmed(false)
+    invalidate()
+  }
+
+  const chooseClaudication = (answer: 'yes' | 'no') => {
+    setClaudication(answer)
+    if (answer === 'yes') {
+      const hasExtensionExercise = selected.some((item) => ['press-up', 'standing-extension'].includes(item.id))
+      if (subtypeId === 'back-extension' || hasExtensionExercise) {
+        setSubtypeId('back-general')
+        setSelected(makeSelection('back-general'))
+        setDirectionConfirmed(false)
+      }
+    }
     invalidate()
   }
 
@@ -227,6 +251,19 @@ function DoctorBuilder() {
 
           <div className="builder-step">
             <StepHeading number={2} title="對準當下表現" hint={condition === 'shoulder' ? '依疼痛敏感度調整運動負荷' : '依重複動作反應選擇；不確定就用一般活動'} />
+            {condition === 'low-back' && (
+              <div className="screening-box">
+                <div>
+                  <b>走路症狀快篩</b>
+                  <p>走一段路後，腳會麻、痛或無力；坐下或身體前彎就明顯改善嗎？</p>
+                  <small>這是方向選擇快篩，不代表診斷。</small>
+                </div>
+                <div className="screening-box__choices" role="radiogroup" aria-label="走路症狀快篩">
+                  <button type="button" role="radio" aria-checked={claudication === 'no'} className={claudication === 'no' ? 'is-selected' : ''} onClick={() => chooseClaudication('no')}>否／不符合</button>
+                  <button type="button" role="radio" aria-checked={claudication === 'yes'} className={claudication === 'yes' ? 'is-alert' : ''} onClick={() => chooseClaudication('yes')}>是／符合</button>
+                </div>
+              </div>
+            )}
             <div className="segmented" role="radiogroup" aria-label="臨床分類">
               {conditionSubtypes.map((subtype) => (
                 <button
@@ -235,10 +272,14 @@ function DoctorBuilder() {
                   aria-checked={subtypeId === subtype.id}
                   className={subtypeId === subtype.id ? 'is-selected' : ''}
                   key={subtype.id}
+                  disabled={subtype.id === 'back-extension' && claudication !== 'no'}
                   onClick={() => chooseSubtype(subtype.id)}
                 >{subtype.name}</button>
               ))}
             </div>
+            {claudication === 'yes' && (
+              <div className="clinical-note clinical-note--alert"><AlertTriangle size={18} /><span>可能有神經性跛行表現；已停用伸展方向。請依臨床評估使用一般活動或其他合適策略。</span></div>
+            )}
             <div className="clinical-note"><Info size={18} /><span>{currentSubtype.description}</span></div>
             {currentSubtype.needsDirectionalConfirmation && (
               <label className={`confirmation ${directionConfirmed ? 'is-checked' : ''}`}>
@@ -275,7 +316,11 @@ function DoctorBuilder() {
                 <AlertTriangle /><span><b>有警訊，先轉介</b><small>不產生運動處方</small></span>
               </button>
             </div>
-            <p className="safety-helper">例：新發大小便或會陰感覺異常、快速惡化無力、重大外傷、發燒或全身性症狀。</p>
+            <p className="safety-helper">
+              {condition === 'shoulder' && '例：肩／上背不適伴胸口悶、喘或冒冷汗；'}
+              {condition === 'low-back' && '例：新發大小便異常、會陰或大腿內側麻木；'}
+              快速惡化無力、重大外傷、發燒或全身性症狀。
+            </p>
             {safety === 'refer' && (
               <div className="referral-block"><CircleStop /><span><b>目前不適合開立居家運動。</b>請依臨床判斷安排進一步評估或轉介。</span></div>
             )}
@@ -347,8 +392,9 @@ function DoctorBuilder() {
                 <div className="qr-result__actions">
                   <a className="button button--primary" href={generatedUrl} target="_blank" rel="noreferrer">開啟病人版 <ExternalLink size={17} /></a>
                   <button className="button button--secondary" type="button" onClick={copyLink}>{copied ? <Check size={17} /> : <Copy size={17} />}{copied ? '已複製' : '複製連結'}</button>
-                  <button className="button button--quiet" type="button" onClick={() => window.print()}><Printer size={17} />列印備援</button>
+                  <button className="button button--quiet" type="button" onClick={() => window.print()}><Printer size={17} />列印紙本（建議）</button>
                 </div>
+                <p className="qr-result__fallback">網路不穩或病人不熟悉掃碼時，建議一併列印。</p>
               </div>
             ) : (
               <div>
@@ -357,7 +403,13 @@ function DoctorBuilder() {
                 </button>
                 {!ready && (
                   <p className="generate-area__hint">
-                    {safety === null ? '請先完成安全篩檢。' : safety === 'refer' ? '有警訊時不開立運動處方。' : '請先確認方向偏好。'}
+                    {condition === 'low-back' && claudication === null
+                      ? '請先完成走路症狀快篩。'
+                      : safety === null
+                        ? '請先完成安全篩檢。'
+                        : safety === 'refer'
+                          ? '有警訊時不開立運動處方。'
+                          : '請先確認方向偏好。'}
                   </p>
                 )}
               </div>
@@ -378,6 +430,7 @@ function DoctorBuilder() {
             <p>居家運動處方・{new Date().toLocaleDateString('zh-TW')}</p>
             <h1>{conditionName(condition)}｜{currentSubtype.name}</h1>
             <span>請依醫師設定的次數與頻率練習，不必忍痛完成。</span>
+            <div className="doctor-print-sheet__fields"><span>義診名稱：________________</span><span>醫師簽名：________________</span></div>
           </div>
           <div className="doctor-print-sheet__exercises">
             {selected.map((item, index) => {
@@ -396,7 +449,8 @@ function DoctorBuilder() {
             })}
           </div>
           <footer>
-            <b>停止並尋求評估：</b>尖銳痛、新麻木或無力、疼痛向手臂／小腿更遠處延伸，或明顯惡化隔天仍未恢復。新發大小便或性功能異常、會陰麻木或快速惡化無力，請立即就醫。
+            <b>停止並尋求評估：</b>尖銳痛、新麻木或無力、疼痛往手臂／小腿更遠處延伸，或隔天仍明顯惡化。胸口悶、喘不過氣或冒冷汗；大小便突然解不出來或失禁；會陰或大腿內側突然麻木；手或腳越來越沒力，請立即就醫。<br />
+            本建議依當日簡易評估提供，非診斷，不取代完整檢查；症狀未改善或加重請至醫療院所就診。
           </footer>
         </section>
       )}
@@ -414,6 +468,68 @@ function PatientPrescription({ prescription }: { prescription: Prescription }) {
   const [completed, setCompleted] = useState<number[]>([])
   const [seconds, setSeconds] = useState(60)
   const [running, setRunning] = useState(false)
+  const wakeLockRef = useRef<{ release: () => Promise<void> } | null>(null)
+  const timerNotifiedRef = useRef(false)
+
+  const releaseWakeLock = async () => {
+    if (!wakeLockRef.current) return
+    try {
+      await wakeLockRef.current.release()
+    } catch {
+      // The browser may already have released it when the screen was hidden.
+    }
+    wakeLockRef.current = null
+  }
+
+  const notifyTimerDone = () => {
+    void releaseWakeLock()
+    navigator.vibrate?.([150, 100, 150])
+    try {
+      const AudioContextClass = window.AudioContext
+      const context = new AudioContextClass()
+      const oscillator = context.createOscillator()
+      const gain = context.createGain()
+      oscillator.frequency.value = 880
+      gain.gain.setValueAtTime(0.08, context.currentTime)
+      gain.gain.exponentialRampToValueAtTime(0.001, context.currentTime + 0.28)
+      oscillator.connect(gain).connect(context.destination)
+      oscillator.start()
+      oscillator.stop(context.currentTime + 0.28)
+      oscillator.addEventListener('ended', () => { void context.close() }, { once: true })
+    } catch {
+      // Audio feedback is optional; the visual timer still completes.
+    }
+  }
+
+  const toggleTimer = async () => {
+    if (running) {
+      setRunning(false)
+      await releaseWakeLock()
+      return
+    }
+    if (seconds === 0) {
+      setSeconds(60)
+      timerNotifiedRef.current = false
+    }
+    const wakeLock = (navigator as Navigator & {
+      wakeLock?: { request: (type: 'screen') => Promise<{ release: () => Promise<void> }> }
+    }).wakeLock
+    if (wakeLock) {
+      try {
+        wakeLockRef.current = await wakeLock.request('screen')
+      } catch {
+        // Unsupported or denied wake lock should not prevent timing.
+      }
+    }
+    setRunning(true)
+  }
+
+  const resetTimer = () => {
+    setSeconds(60)
+    setRunning(false)
+    timerNotifiedRef.current = false
+    void releaseWakeLock()
+  }
 
   useEffect(() => {
     if (!running) return
@@ -421,6 +537,10 @@ function PatientPrescription({ prescription }: { prescription: Prescription }) {
       setSeconds((value) => {
         if (value <= 1) {
           setRunning(false)
+          if (!timerNotifiedRef.current) {
+            timerNotifiedRef.current = true
+            notifyTimerDone()
+          }
           return 0
         }
         return value - 1
@@ -432,7 +552,11 @@ function PatientPrescription({ prescription }: { prescription: Prescription }) {
   useEffect(() => {
     setSeconds(60)
     setRunning(false)
+    timerNotifiedRef.current = false
+    void releaseWakeLock()
   }, [active])
+
+  useEffect(() => () => { void releaseWakeLock() }, [])
 
   const created = new Date(`${prescription.createdAt}T00:00:00`)
   const daysOld = Math.floor((Date.now() - created.getTime()) / 86_400_000)
@@ -484,10 +608,10 @@ function PatientPrescription({ prescription }: { prescription: Prescription }) {
                     </ol>
                     <div className="key-cue"><Info size={19} /><span><b>記得</b>{exercise.keyCue}</span></div>
                     <div className="timer-card">
-                      <div className="timer-card__time"><small>跟著做 60 秒</small><b>{Math.floor(seconds / 60)}:{String(seconds % 60).padStart(2, '0')}</b></div>
+                      <div className="timer-card__time"><small>跟著做 60 秒・結束會震動／提示音</small><b>{Math.floor(seconds / 60)}:{String(seconds % 60).padStart(2, '0')}</b></div>
                       <div className="timer-card__controls">
-                        <button type="button" onClick={() => setRunning(!running)}>{running ? <Pause /> : <Play />}{running ? '暫停' : seconds === 0 ? '再一次' : '開始'}</button>
-                        <button type="button" onClick={() => { setSeconds(60); setRunning(false) }} aria-label="重設計時"><RefreshCcw /></button>
+                        <button type="button" onClick={() => { void toggleTimer() }}>{running ? <Pause /> : <Play />}{running ? '暫停' : seconds === 0 ? '再一次' : '開始'}</button>
+                        <button type="button" onClick={resetTimer} aria-label="重設計時"><RefreshCcw /></button>
                       </div>
                     </div>
                   </div>
@@ -503,10 +627,22 @@ function PatientPrescription({ prescription }: { prescription: Prescription }) {
             <li>出現尖銳痛，或疼痛明顯增加且隔天仍未恢復。</li>
             <li>出現新的麻木、無力，或疼痛往手臂／小腿更遠處延伸。</li>
           </ul>
-          <div className="urgent-note"><AlertTriangle /><span><b>請立即就醫</b>新發大小便或性功能異常、會陰麻木、快速惡化無力；或有重大外傷、發燒等全身性症狀。</span></div>
+          <div className="urgent-note">
+            <AlertTriangle />
+            <span>
+              <b>有這些情形，停止運動並立即就醫</b>
+              <ul>
+                <li>胸口悶、喘不過氣或冒冷汗。</li>
+                <li>大小便突然解不出來或失禁。</li>
+                <li>會陰或大腿內側突然麻木。</li>
+                <li>手或腳越來越沒力。</li>
+                <li>重大外傷後疼痛，或發燒且越來越不舒服。</li>
+              </ul>
+            </span>
+          </div>
         </section>
 
-        <p className="patient-disclaimer">這份內容是本次看診的運動建議。若症狀改變、無法確定動作是否適合，請停止並回診評估。</p>
+        <p className="patient-disclaimer">這份內容是本次看診的運動建議。第一次成功開啟後，網路不穩時仍可再次查看。若症狀改變、無法確定動作是否適合，請停止並回診評估。</p>
       </main>
 
       <div className="patient-sticky-action">
@@ -525,14 +661,15 @@ function InvalidPrescription() {
       <Brand />
       <AlertTriangle />
       <h1>這張處方無法開啟</h1>
-      <p>連結可能不完整或已被修改，請向醫師重新取得 QR code。</p>
+      <p>連結可能不完整、版本較舊或已被修改，請向醫師重新取得 QR code。</p>
       <a className="button button--secondary" href={window.location.pathname}><ArrowLeft size={17} />回到醫師端</a>
     </main>
   )
 }
 
 export default function App() {
-  const payload = new URLSearchParams(window.location.search).get('rx')
+  const hashPayload = window.location.hash.startsWith('#rx=') ? window.location.hash.slice(4) : null
+  const payload = hashPayload || new URLSearchParams(window.location.search).get('rx')
   if (!payload) return <DoctorBuilder />
   const prescription = decodePrescription(payload)
   return prescription ? <PatientPrescription prescription={prescription} /> : <InvalidPrescription />
