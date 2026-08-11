@@ -1,6 +1,6 @@
 # 視覺 fidelity ledger
 
-最終 QA：2026-08-10。以 Codex in-app browser 在原生 1440×1000（醫師端）與 390×844（病人端）視窗驗證，並將實作截圖和 ImageGen 概念稿並排檢視。
+最終 QA：2026-08-11。以 Codex in-app browser 在桌機與 390×844 手機視窗驗證，並將「常見診斷庫」實作截圖和 ImageGen 概念稿並排檢視。
 
 | 比較點 | 概念稿 | 最終實作 | 結果 |
 | --- | --- | --- | --- |
@@ -12,16 +12,24 @@
 | 運動圖像 | 單色線稿動作示意 | 以統一醫療線稿風格的原創圖像落地至每個動作 | 忠實 |
 | 安全提醒 | 簡短停止規則 | 區分「先停止」與「立即就醫」，醫師端警訊會直接阻擋 QR | 有意強化 |
 | QR 與隱私 | 手機預覽下方 QR、不含個資 | 使用版本化短編碼與網址片段、無後端與個資，另提供離線快取與紙本列印 | 忠實並提升現場可靠度 |
+| 診斷庫規模 | 頸肩、上肢、軀幹、髖膝、足踝共 12 個高頻問題 | 12 個診斷全部落地，每個均有分期與 3 個核心動作預設 | 忠實 |
+| 診斷尋找 | 搜尋框加部位分頁 | 支援診斷名、部位與「網球肘／跑者膝／翻船」等俗稱；分頁可水平滑動 | 忠實並增補 |
+| 診斷卡密度 | 三欄緊湊清單、選取狀態清楚 | 桌機三欄、較窄桌機兩欄、手機單欄；保留綠色左線與勾選狀態 | 忠實並響應式調整 |
+| 首屏可讀性 | 標題、診斷區與病人預覽同時可見 | 桌機保留同一資訊層級；診斷庫向下延伸，不壓縮點擊目標 | 忠實 |
+| 多診斷圖像 | 各部位使用一致的極簡臨床線稿 | 新增 13 張原創線稿，並讓相近動作共用三聯示意，避免錯圖 | 忠實 |
 
 ## 驗證截圖
 
 - `docs/screenshots/doctor-desktop-final.png`
 - `docs/screenshots/patient-mobile-final.png`
+- `docs/screenshots/doctor-desktop-library.png`
+- `docs/screenshots/patient-mobile-library.png`
 
 ## 概念稿
 
 - `docs/concepts/doctor-builder.png`
 - `docs/concepts/patient-mobile.png`
+- `docs/concepts/doctor-diagnosis-library.png`
 
 ## 上線後專家審查
 

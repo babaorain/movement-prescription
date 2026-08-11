@@ -10,8 +10,10 @@ import {
   CircleStop,
   Clock3,
   Copy,
+  Dumbbell,
   ExternalLink,
   Footprints,
+  Hand,
   Info,
   Minus,
   Pause,
@@ -20,14 +22,15 @@ import {
   Printer,
   QrCode,
   RefreshCcw,
+  Search,
   ShieldCheck,
   Stethoscope,
   X,
 } from 'lucide-react'
 import { QRCodeSVG } from 'qrcode.react'
-import { conditionName, conditions, exercises, getExercise, getSubtype, subtypes } from './data'
+import { conditionName, conditions, exercises, getCondition, getExercise, getSubtype, regions, subtypes } from './data'
 import { cloneDose, decodePrescription, formatDose, prescriptionUrl } from './lib/prescription'
-import type { ConditionId, Dose, Prescription, SelectedExercise } from './types'
+import type { ConditionId, Dose, Prescription, RegionId, SelectedExercise } from './types'
 
 const frequencies = ['每天 1 次', '每天 2 次', '每週 3 次', '每週 5 次'] as const
 
@@ -60,6 +63,13 @@ function StepHeading({ number, title, hint }: { number: number; title: string; h
       </div>
     </div>
   )
+}
+
+function ConditionIcon({ region }: { region: RegionId }) {
+  if (region === 'upper-limb') return <Hand />
+  if (region === 'hip-knee' || region === 'foot-ankle') return <Footprints />
+  if (region === 'trunk') return <Dumbbell />
+  return <Activity />
 }
 
 function makeSelection(subtypeId: string): SelectedExercise[] {
@@ -114,18 +124,28 @@ function Stepper({ label, value, onMinus, onPlus }: { label: string; value: numb
 
 function DoctorBuilder() {
   const [condition, setCondition] = useState<ConditionId>('shoulder')
+  const [regionFilter, setRegionFilter] = useState<RegionId | 'all'>('all')
+  const [diagnosisQuery, setDiagnosisQuery] = useState('')
   const [subtypeId, setSubtypeId] = useState('shoulder-high')
   const [selected, setSelected] = useState<SelectedExercise[]>(() => makeSelection('shoulder-high'))
   const [safety, setSafety] = useState<'safe' | 'refer' | null>(null)
   const [claudication, setClaudication] = useState<'yes' | 'no' | null>(null)
   const [directionConfirmed, setDirectionConfirmed] = useState(false)
+  const [scopeConfirmed, setScopeConfirmed] = useState(false)
   const [generatedUrl, setGeneratedUrl] = useState('')
   const [copied, setCopied] = useState(false)
   const qrAreaRef = useRef<HTMLDivElement>(null)
+  const currentCondition = getCondition(condition)
   const currentSubtype = getSubtype(subtypeId)!
   const conditionSubtypes = subtypes.filter((subtype) => subtype.condition === condition)
-  const availableExercises = exercises.filter((exercise) => exercise.condition === condition
+  const availableExercises = exercises.filter((exercise) => exercise.conditions.includes(condition)
     && !(claudication === 'yes' && ['press-up', 'standing-extension'].includes(exercise.id)))
+  const normalizedQuery = diagnosisQuery.trim().toLocaleLowerCase('zh-TW')
+  const filteredConditions = conditions.filter((item) => {
+    const matchesRegion = regionFilter === 'all' || item.region === regionFilter
+    const searchable = [item.name, item.hint, ...item.keywords].join(' ').toLocaleLowerCase('zh-TW')
+    return matchesRegion && (!normalizedQuery || searchable.includes(normalizedQuery))
+  })
 
   const currentPrescription: Prescription = useMemo(() => ({
     v: 1,
@@ -139,6 +159,7 @@ function DoctorBuilder() {
   const ready = safety === 'safe'
     && selected.length >= 1
     && (condition !== 'low-back' || claudication !== null)
+    && (condition !== 'achilles' || scopeConfirmed)
     && (!currentSubtype.needsDirectionalConfirmation || directionConfirmed)
 
   const invalidate = () => {
@@ -154,6 +175,7 @@ function DoctorBuilder() {
     setClaudication(null)
     setSafety(null)
     setDirectionConfirmed(false)
+    setScopeConfirmed(false)
     invalidate()
   }
 
@@ -227,30 +249,56 @@ function DoctorBuilder() {
           <div className="builder__intro">
             <p className="eyebrow"><Stethoscope size={16} /> 醫師端</p>
             <h1>在一分鐘內，開好一張<br />病人真的會用的運動處方。</h1>
-            <p>選好診斷與當下表現，再微調 1–3 個核心動作。處方不含姓名或個資。</p>
+            <p>從常見骨骼肌肉問題中選擇診斷與當下表現，再微調 1–3 個核心動作。處方不含姓名或個資。</p>
           </div>
 
           <div className="builder-step">
-            <StepHeading number={1} title="選擇診斷" hint="目前先聚焦義診最常見的兩類問題" />
-            <div className="choice-grid choice-grid--condition">
-              {conditions.map((item) => (
+            <StepHeading number={1} title="選擇診斷" hint="可依部位篩選，或直接搜尋診斷與俗稱" />
+            <div className="diagnosis-picker">
+              <label className="diagnosis-search">
+                <Search size={18} aria-hidden="true" />
+                <input
+                  type="search"
+                  value={diagnosisQuery}
+                  onChange={(event) => setDiagnosisQuery(event.target.value)}
+                  placeholder="搜尋診斷或部位"
+                  aria-label="搜尋診斷或部位"
+                />
+                {diagnosisQuery && <button type="button" onClick={() => setDiagnosisQuery('')} aria-label="清除搜尋"><X size={16} /></button>}
+              </label>
+              <div className="region-filters" role="group" aria-label="依部位篩選">
+                {regions.map((region) => (
+                  <button
+                    type="button"
+                    key={region.id}
+                    className={regionFilter === region.id ? 'is-selected' : ''}
+                    aria-pressed={regionFilter === region.id}
+                    onClick={() => setRegionFilter(region.id)}
+                  >{region.name}</button>
+                ))}
+              </div>
+            </div>
+            <div className="diagnosis-grid">
+              {filteredConditions.map((item) => (
                 <button
                   type="button"
-                  className={`choice-card ${condition === item.id ? 'is-selected' : ''}`}
+                  className={`diagnosis-card ${condition === item.id ? 'is-selected' : ''}`}
                   key={item.id}
                   onClick={() => chooseCondition(item.id)}
                   aria-pressed={condition === item.id}
                 >
-                  {item.id === 'shoulder' ? <Activity /> : <Footprints />}
+                  <ConditionIcon region={item.region} />
                   <span><b>{item.name}</b><small>{item.hint}</small></span>
-                  {condition === item.id && <CheckCircle2 className="choice-card__check" />}
+                  {condition === item.id && <CheckCircle2 className="diagnosis-card__check" />}
                 </button>
               ))}
+              {!filteredConditions.length && <p className="diagnosis-empty">找不到相符項目；可換部位或縮短關鍵字。</p>}
             </div>
+            <p className="diagnosis-boundary"><AlertTriangle size={15} />不在清單或診斷不確定時，請勿硬套最接近的項目；改提供一般活動與就醫建議。</p>
           </div>
 
           <div className="builder-step">
-            <StepHeading number={2} title="對準當下表現" hint={condition === 'shoulder' ? '依疼痛敏感度調整運動負荷' : '依重複動作反應選擇；不確定就用一般活動'} />
+            <StepHeading number={2} title="對準當下表現" hint={currentCondition.stageHint} />
             {condition === 'low-back' && (
               <div className="screening-box">
                 <div>
@@ -292,6 +340,17 @@ function DoctorBuilder() {
                 <span><b>已確認方向偏好</b><small>重複動作後，症狀減輕或向腰部集中，而非往腿部延伸。</small></span>
               </label>
             )}
+            {condition === 'achilles' && (
+              <label className={`confirmation confirmation--scope ${scopeConfirmed ? 'is-checked' : ''}`}>
+                <input
+                  type="checkbox"
+                  checked={scopeConfirmed}
+                  onChange={(event) => { setScopeConfirmed(event.target.checked); invalidate() }}
+                />
+                <span className="confirmation__box"><Check size={16} /></span>
+                <span><b>已確認為中段跟腱疼痛</b><small>壓痛主要在跟骨上方約 2–6 公分的腱體；非跟骨附著點、急性斷裂或部分撕裂疑慮。</small></span>
+              </label>
+            )}
           </div>
 
           <div className="builder-step safety-step">
@@ -317,8 +376,7 @@ function DoctorBuilder() {
               </button>
             </div>
             <p className="safety-helper">
-              {condition === 'shoulder' && '例：肩／上背不適伴胸口悶、喘或冒冷汗；'}
-              {condition === 'low-back' && '例：新發大小便異常、會陰或大腿內側麻木；'}
+              例：{currentCondition.safetyHint}
               快速惡化無力、重大外傷、發燒或全身性症狀。
             </p>
             {safety === 'refer' && (
@@ -381,7 +439,7 @@ function DoctorBuilder() {
                 )
               })}
             </div>
-            <div className="phone-preview__safety"><ShieldCheck size={18} /><span><b>安全提醒</b><small>出現新麻木、無力或症狀往遠端延伸就停止。</small></span></div>
+            <div className="phone-preview__safety"><ShieldCheck size={18} /><span><b>安全提醒</b><small>出現與今天評估不同的新麻木／無力，或症狀範圍擴大就停止。</small></span></div>
           </div>
 
           <div className="generate-area" ref={qrAreaRef}>
@@ -392,7 +450,7 @@ function DoctorBuilder() {
                 <div className="qr-result__actions">
                   <a className="button button--primary" href={generatedUrl} target="_blank" rel="noreferrer">開啟病人版 <ExternalLink size={17} /></a>
                   <button className="button button--secondary" type="button" onClick={copyLink}>{copied ? <Check size={17} /> : <Copy size={17} />}{copied ? '已複製' : '複製連結'}</button>
-                  <button className="button button--quiet" type="button" onClick={() => window.print()}><Printer size={17} />列印紙本（建議）</button>
+                  <button className="button button--quiet" type="button" onClick={() => window.print()}><Printer size={17} />列印紙本＋QR（義診建議）</button>
                 </div>
                 <p className="qr-result__fallback">網路不穩或病人不熟悉掃碼時，建議一併列印。</p>
               </div>
@@ -409,7 +467,9 @@ function DoctorBuilder() {
                         ? '請先完成安全篩檢。'
                         : safety === 'refer'
                           ? '有警訊時不開立運動處方。'
-                          : '請先確認方向偏好。'}
+                          : condition === 'achilles' && !scopeConfirmed
+                            ? '請先確認中段跟腱的適用範圍。'
+                            : '請先確認方向偏好。'}
                   </p>
                 )}
               </div>
@@ -449,7 +509,7 @@ function DoctorBuilder() {
             })}
           </div>
           <footer>
-            <b>停止並尋求評估：</b>尖銳痛、新麻木或無力、疼痛往手臂／小腿更遠處延伸，或隔天仍明顯惡化。胸口悶、喘不過氣或冒冷汗；大小便突然解不出來或失禁；會陰或大腿內側突然麻木；手或腳越來越沒力，請立即就醫。<br />
+            <b>停止並尋求評估：</b>尖銳痛；和今天醫師評估時不同的新麻木或無力；麻木範圍擴大、明顯加重；疼痛往手臂／小腿更遠處延伸；或隔天仍明顯惡化。胸口悶、喘不過氣或冒冷汗；大小便突然解不出來或失禁；會陰或大腿內側突然麻木；手或腳越來越沒力，請立即就醫。<br />
             本建議依當日簡易評估提供，非診斷，不取代完整檢查；症狀未改善或加重請至醫療院所就診。
           </footer>
         </section>
@@ -462,11 +522,15 @@ function DoctorBuilder() {
 function PatientPrescription({ prescription }: { prescription: Prescription }) {
   const items = prescription.exercises
     .map((selected) => ({ selected, exercise: getExercise(selected.id) }))
-    .filter((item) => item.exercise && item.exercise.condition === prescription.condition)
+    .filter((item) => item.exercise && item.exercise.conditions.includes(prescription.condition))
   const subtype = getSubtype(prescription.subtype)
+  const timerSecondsFor = (index: number) => {
+    const dose = items[index]?.selected.dose
+    return dose?.type === 'duration' ? dose.minutes * 60 : 0
+  }
   const [active, setActive] = useState(0)
   const [completed, setCompleted] = useState<number[]>([])
-  const [seconds, setSeconds] = useState(60)
+  const [seconds, setSeconds] = useState(() => timerSecondsFor(0))
   const [running, setRunning] = useState(false)
   const wakeLockRef = useRef<{ release: () => Promise<void> } | null>(null)
   const timerNotifiedRef = useRef(false)
@@ -508,7 +572,7 @@ function PatientPrescription({ prescription }: { prescription: Prescription }) {
       return
     }
     if (seconds === 0) {
-      setSeconds(60)
+      setSeconds(timerSecondsFor(active))
       timerNotifiedRef.current = false
     }
     const wakeLock = (navigator as Navigator & {
@@ -525,7 +589,7 @@ function PatientPrescription({ prescription }: { prescription: Prescription }) {
   }
 
   const resetTimer = () => {
-    setSeconds(60)
+    setSeconds(timerSecondsFor(active))
     setRunning(false)
     timerNotifiedRef.current = false
     void releaseWakeLock()
@@ -550,7 +614,7 @@ function PatientPrescription({ prescription }: { prescription: Prescription }) {
   }, [running])
 
   useEffect(() => {
-    setSeconds(60)
+    setSeconds(timerSecondsFor(active))
     setRunning(false)
     timerNotifiedRef.current = false
     void releaseWakeLock()
@@ -583,7 +647,7 @@ function PatientPrescription({ prescription }: { prescription: Prescription }) {
         </section>
 
         {daysOld > 14 && (
-          <div className="stale-notice"><Clock3 /><span><b>這份處方已超過 14 天。</b>若疼痛位置、強度或活動能力有變化，請先重新評估。</span></div>
+          <div className="stale-notice"><Clock3 /><span><b>這份處方已超過 14 天。</b>若疼痛位置、強度或活動能力有變化，請回原評估醫師或就近至復健科／骨科重新評估。</span></div>
         )}
 
         <section className="patient-exercises" aria-labelledby="exercise-list-title">
@@ -607,13 +671,15 @@ function PatientPrescription({ prescription }: { prescription: Prescription }) {
                       {exercise.steps.map((step, stepIndex) => <li key={step}><span>{stepIndex + 1}</span><p>{step}</p></li>)}
                     </ol>
                     <div className="key-cue"><Info size={19} /><span><b>記得</b>{exercise.keyCue}</span></div>
-                    <div className="timer-card">
-                      <div className="timer-card__time"><small>跟著做 60 秒・結束會震動／提示音</small><b>{Math.floor(seconds / 60)}:{String(seconds % 60).padStart(2, '0')}</b></div>
-                      <div className="timer-card__controls">
-                        <button type="button" onClick={() => { void toggleTimer() }}>{running ? <Pause /> : <Play />}{running ? '暫停' : seconds === 0 ? '再一次' : '開始'}</button>
-                        <button type="button" onClick={resetTimer} aria-label="重設計時"><RefreshCcw /></button>
+                    {selected.dose.type === 'duration' && (
+                      <div className="timer-card">
+                        <div className="timer-card__time"><small>這個動作用分鐘算・結束會震動／提示音</small><b>{Math.floor(seconds / 60)}:{String(seconds % 60).padStart(2, '0')}</b></div>
+                        <div className="timer-card__controls">
+                          <button type="button" onClick={() => { void toggleTimer() }}>{running ? <Pause /> : <Play />}{running ? '暫停' : seconds === 0 ? '再一次' : '開始計時'}</button>
+                          <button type="button" onClick={resetTimer} aria-label="重設計時"><RefreshCcw /></button>
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                 )}
               </article>
@@ -625,7 +691,8 @@ function PatientPrescription({ prescription }: { prescription: Prescription }) {
           <div className="patient-safety__title"><ShieldCheck /><div><span>安全第一</span><h2>這些情況先停止</h2></div></div>
           <ul>
             <li>出現尖銳痛，或疼痛明顯增加且隔天仍未恢復。</li>
-            <li>出現新的麻木、無力，或疼痛往手臂／小腿更遠處延伸。</li>
+            <li>出現和今天醫師評估時不同的新麻木／無力，或麻木範圍擴大、明顯加重。</li>
+            <li>疼痛往手臂／小腿更遠處延伸。</li>
           </ul>
           <div className="urgent-note">
             <AlertTriangle />
@@ -642,7 +709,7 @@ function PatientPrescription({ prescription }: { prescription: Prescription }) {
           </div>
         </section>
 
-        <p className="patient-disclaimer">這份內容是本次看診的運動建議。第一次成功開啟後，網路不穩時仍可再次查看。若症狀改變、無法確定動作是否適合，請停止並回診評估。</p>
+        <p className="patient-disclaimer">這份內容是本次看診的運動建議。第一次成功開啟後，網路不穩時仍可再次查看。若症狀改變、無法確定動作是否適合，請停止，並回原評估醫師或就近至復健科／骨科評估。</p>
       </main>
 
       <div className="patient-sticky-action">

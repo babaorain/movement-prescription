@@ -1,7 +1,9 @@
-const CACHE_NAME = 'movement-prescription-v3'
+const CACHE_NAME = 'movement-prescription-v6'
 const APP_SHELL = [
   '/',
   '/favicon.svg',
+  '/assets/app.js',
+  '/assets/app.css',
   '/exercises/pendulum.png',
   '/exercises/table-slide.png',
   '/exercises/cane-er.png',
@@ -14,6 +16,20 @@ const APP_SHELL = [
   '/exercises/abdominal-brace.png',
   '/exercises/bridge.png',
   '/exercises/walking.png',
+  '/exercises/neck-control.png',
+  '/exercises/shoulder-isometric.png',
+  '/exercises/wrist-loading.png',
+  '/exercises/heel-slide.png',
+  '/exercises/sit-to-stand.png',
+  '/exercises/hip-abduction.png',
+  '/exercises/hip-abduction-isometric.png',
+  '/exercises/quad-set.png',
+  '/exercises/step-up.png',
+  '/exercises/ankle-mobility.png',
+  '/exercises/single-leg-balance.png',
+  '/exercises/plantar-stretch.png',
+  '/exercises/calf-stretch.png',
+  '/exercises/calf-loading.png',
 ]
 
 self.addEventListener('install', (event) => {
