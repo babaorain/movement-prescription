@@ -1,0 +1,186 @@
+import type { Condition, Subtype } from '../../types'
+
+export const hipConditions: Condition[] = [
+  {
+    id: 'hip-oa', code: 'h1', name: '髖關節退化', aka: 'Hip OA', hint: '鼠蹊痛／活動受限', region: 'hip',
+    keywords: ['髖關節炎', '髖退化', '鼠蹊痛', '髖關節'],
+    stageHint: '依疼痛敏感度安排活動度、肌力與步行',
+    safetyHint: '跌倒或外傷後無法承重，或髖部劇痛伴發燒／全身不適；',
+    education: {
+      what: '髖關節軟骨磨損造成的疼痛與僵硬，典型痛在鼠蹊部，有時轉移到大腿前側或膝蓋。',
+      why: '長年負重與關節形狀等因素造成軟骨磨損，關節周圍組織也會變得敏感。',
+      course: '症狀常起伏。運動與體重管理是最有實證的第一線治療，可有效延緩功能退化。',
+      myth: '「退化就不能運動」是錯的。適度負重運動反而有助於軟骨與周邊肌肉的健康。',
+    },
+    lifestyle: [
+      '選擇低衝擊的運動：步行、固定式腳踏車、水中運動。',
+      '體重每減少一點，髖關節的負擔就明顯下降。',
+      '疼痛較嚴重時可使用手杖（拿在健側手），能有效減輕患側負荷。',
+      '避免長時間深蹲、盤腿與坐矮椅子。',
+    ],
+    followUp: [
+      '運動 8–12 週未改善，請回診調整方案。',
+      '走路距離明顯縮短、夜間痛醒或需要止痛藥才能生活，請回診討論其他治療。',
+      '若功能嚴重受限且保守治療無效，可討論人工關節置換的時機。',
+    ],
+  },
+  {
+    id: 'gtps', code: 'h2', name: '大轉子疼痛症候群', aka: 'GTPS／臀肌肌腱病', hint: '髖外側痛／側睡痛', region: 'hip',
+    keywords: ['臀肌肌腱', '大轉子', '側睡痛', '髖外側', '轉子滑囊'],
+    stageHint: '降低壓迫姿勢，依耐受度訓練臀肌',
+    safetyHint: '跌倒或外傷後無法承重，或髖部劇痛伴發燒／全身不適；',
+    education: {
+      what: '大腿外側骨突（大轉子）周圍的臀部肌腱疼痛，側睡壓到、久站與上樓時最明顯。',
+      why: '臀部肌腱在髖部內收（腿跨過中線）的姿勢下會被壓迫，長期壓迫加上負荷不足造成肌腱退化。',
+      course: '以減少壓迫姿勢加上漸進臀肌訓練為主，多數在 3 個月內明顯改善，但需要耐心。',
+      myth: '這通常不是單純的「滑囊發炎」，所以只打消炎針而不訓練，容易反覆發作。',
+    },
+    lifestyle: [
+      '側睡時在雙膝與雙腳踝之間夾枕頭，避免上方腿跨過中線。',
+      '避免翹腳、站三七步與盤腿坐。',
+      '不要用滾筒或手直接壓大腿外側最痛的骨突處。',
+      '上樓與上坡先減量，之後再逐步恢復。',
+    ],
+    followUp: [
+      '規律訓練 12 週未改善，請回診討論影像或其他治療。',
+      '出現無法承重、髖部劇痛或發燒，請盡快就醫。',
+      '若合併腰部或臀部深處症狀，需回診鑑別。',
+    ],
+  },
+  {
+    id: 'fai', code: 'h3', name: '股骨髖臼夾擠', aka: 'FAI／髖唇損傷', hint: '深蹲／久坐後鼠蹊夾痛', region: 'hip',
+    keywords: ['夾擠', '髖唇', 'FAI', '鼠蹊夾痛', '深蹲痛'],
+    stageHint: '避開夾擠角度，訓練髖部控制與肌力',
+    safetyHint: '髖部卡住無法活動、外傷後無法承重，或髖部劇痛伴發燒；',
+    education: {
+      what: '髖關節在彎曲併內旋時，股骨與髖臼邊緣互相夾擠，造成鼠蹊部深處疼痛，常見於深蹲或久坐後站起。',
+      why: '股骨頭頸交界或髖臼形狀的差異，讓某些角度的活動空間不足，長期反覆造成軟骨與髖唇受損。',
+      course: '以運動治療與活動調整為第一線，多數可改善症狀。年輕、高活動需求且保守無效者才考慮手術。',
+      myth: '影像上有 cam 或 pincer 形態的人很多，但不一定會痛，形態本身不是手術的理由。',
+    },
+    lifestyle: [
+      '暫時避免深蹲到底、盤腿、久坐低矮沙發與大角度的髖部旋轉。',
+      '坐姿時讓髖部略高於膝蓋，可在椅面後方墊高。',
+      '運動時把蹲的深度限制在不夾痛的範圍內。',
+      '長時間開車或坐飛機時，中途起身走動。',
+    ],
+    followUp: [
+      '運動治療 12 週未改善，請回診討論影像檢查與轉介。',
+      '出現卡住、彈響合併疼痛或打軟腳，請回診評估。',
+      '症狀影響工作或運動需求高，可討論進一步治療。',
+    ],
+  },
+  {
+    id: 'adductor-strain', code: 'h4', name: '內收肌／鼠蹊拉傷', aka: 'Adductor strain', hint: '大腿內側拉傷痛', region: 'hip',
+    keywords: ['內收肌', '鼠蹊拉傷', '大腿內側', '拉傷'],
+    stageHint: '從等長開始，依疼痛耐受漸進負荷',
+    safetyHint: '突發劇痛合併明顯瘀青或無法承重（疑似完全撕裂）、鼠蹊腫塊（疝氣）或髖部劇痛伴發燒；',
+    education: {
+      what: '大腿內側的內收肌群拉傷，多發生在急停、變向、劈腿或用力踢的動作。',
+      why: '肌肉在快速拉長的同時被要求出力，超過當下能承受的負荷。',
+      course: '輕度 2–4 週、中度 4–8 週。逐步的漸進負荷訓練比完全休息恢復更快，也能降低復發。',
+      myth: '「不痛就可以回去運動」容易再受傷。應該恢復到力量與功能都接近對側再回場。',
+    },
+    lifestyle: [
+      '急性期 2–3 天避免會引發疼痛的動作，但仍維持一般走動。',
+      '之後在不痛範圍內盡早開始等長訓練，這對恢復很重要。',
+      '回到運動前，先確認能無痛完成側向移動與加速減速。',
+      '運動前確實暖身，並把訓練量的增加控制在每週一成內。',
+    ],
+    followUp: [
+      '4–6 週後仍有明顯疼痛或無力，請回診評估。',
+      '鼠蹊部出現腫塊或咳嗽時疼痛，請回診排除疝氣。',
+      '反覆同一部位拉傷，請回診檢視訓練與生物力學因素。',
+    ],
+  },
+  {
+    id: 'hamstring-tendinopathy', code: 'h5', name: '近端腿後肌腱病', aka: '坐骨結節疼痛', hint: '坐著與跑步時坐骨痛', region: 'hip',
+    keywords: ['腿後肌腱', '坐骨結節', '坐著痛', '大腿後側'],
+    stageHint: '避開壓迫性伸展，以漸進負荷為主',
+    safetyHint: '急性外傷後聽到啪聲、明顯瘀青並無法伸直膝蓋（疑似撕脫），或合併腿麻無力；',
+    education: {
+      what: '大腿後側肌腱在坐骨（屁股骨頭）附著處的疼痛，久坐、跑步、爬坡時最明顯。',
+      why: '肌腱在髖部彎曲時會被壓在坐骨上，加上跑跳負荷，造成肌腱退化性疼痛。',
+      course: '恢復通常較慢，需要 3–6 個月的漸進負荷訓練，但配合度好的人預後不錯。',
+      myth: '「拉筋就會好」是常見誤解。大角度的腿後肌伸展反而會壓迫肌腱，讓症狀加重。',
+    },
+    lifestyle: [
+      '避免長時間坐在硬椅子上，可使用中空坐墊或在坐骨下墊軟墊。',
+      '避免大角度的腿後肌伸展（如壓腿、坐姿前彎）。',
+      '暫時減少上坡、跑步與衝刺，改以平地步行或腳踏車。',
+      '訓練後 24 小時疼痛不應明顯增加，這是調整負荷的依據。',
+    ],
+    followUp: [
+      '規律訓練 3 個月未改善，請回診討論影像或其他治療。',
+      '出現腿部麻木或無力，請回診鑑別坐骨神經問題。',
+      '急性受傷後無法正常走路，請盡快就醫。',
+    ],
+  },
+  {
+    id: 'deep-gluteal', code: 'h6', name: '深臀症候群', aka: '梨狀肌症候群', hint: '臀部深處痛／久坐加重', region: 'hip',
+    keywords: ['梨狀肌', '臀部深處', '坐著麻', '深臀'],
+    stageHint: '以神經滑動與臀部肌力為主',
+    safetyHint: '腰椎來源的神經根症狀（需優先鑑別）、大小便異常或會陰麻木；',
+    education: {
+      what: '坐骨神經在臀部深處被周圍肌肉或組織刺激，造成臀部深處疼痛，有時延伸到大腿後側。',
+      why: '久坐壓迫、臀部肌肉緊繃或外傷，讓神經在通道中活動受限。',
+      course: '多數對神經滑動、臀部訓練與活動調整反應良好，數週到數月內改善。',
+      myth: '臀腿痛不一定都來自腰椎。位置、誘發姿勢與檢查結果不同，處理方式也不同。',
+    },
+    lifestyle: [
+      '避免久坐超過 30–40 分鐘，起身走動或改變重心。',
+      '不要把皮夾放在後口袋，開車時避免長時間單側承重。',
+      '避免長時間或用力按壓臀部深處的痛點。',
+      '症狀發作時，站起來走動通常比繼續坐著有效。',
+    ],
+    followUp: [
+      '運動 6–8 週未改善，請回診鑑別是否為腰椎來源。',
+      '出現腿部無力、麻木範圍擴大，請回診。',
+      '大小便異常或會陰麻木，請立即急診。',
+    ],
+  },
+  {
+    id: 'post-hip-replacement', code: 'h7', name: '髖關節置換術後', aka: 'Post-THR', hint: '術後恢復期', region: 'hip',
+    keywords: ['人工髖關節', '髖置換', '術後', 'THR'],
+    stageHint: '依術式與主治醫師指示的活動限制安排',
+    safetyHint: '傷口紅腫熱、滲液或發燒；突發劇痛合併長度改變或無法承重（疑似脫位）；小腿腫脹壓痛（疑似深部靜脈栓塞）；',
+    education: {
+      what: '換上人工髖關節後，需要循序恢復肌力、活動度與行走能力。',
+      why: '手術前的疼痛與手術本身都會造成肌肉萎縮，需要重新訓練才能恢復正常步態。',
+      course: '多數人在 3 個月內恢復大部分日常功能，完整恢復可能需要 6–12 個月。',
+      myth: '「換完就可以隨便動」並不正確。不同術式有不同的姿勢限制，請務必依主治醫師指示。',
+    },
+    lifestyle: [
+      '嚴格遵守主治醫師給的姿勢限制（後側入路通常需避免髖屈超過 90 度、內收與內旋）。',
+      '坐高一點的椅子與馬桶，避免坐矮沙發。',
+      '穿襪穿鞋使用長柄輔具，不要彎腰去搆腳。',
+      '依指示使用助行器或手杖，不要太早完全放棄輔具。',
+    ],
+    followUp: [
+      '依骨科排定的時程回診追蹤。',
+      '傷口紅腫熱、發燒，或突發劇痛與無法承重，請立即就醫。',
+      '小腿單側腫脹壓痛，請立即就醫排除靜脈栓塞。',
+    ],
+    confirm: {
+      title: '已確認術後階段與活動限制',
+      detail: '已知術式與主治醫師指定的姿勢限制與承重規定，本處方內容不與其牴觸。',
+    },
+  },
+]
+
+export const hipSubtypes: Subtype[] = [
+  { id: 'hip-oa-sensitive', condition: 'hip-oa', name: '疼痛較敏感', description: '先維持髖部活動，搭配低負荷功能訓練。', presetIds: ['heel-slide', 'bridge', 'walking'] },
+  { id: 'hip-oa-loading', condition: 'hip-oa', name: '可漸進負荷', description: '逐步增加下肢肌力、功能活動與有氧耐力。', presetIds: ['sit-to-stand', 'bridge', 'walking'] },
+  { id: 'gtps-sensitive', condition: 'gtps', name: '壓迫／負重較敏感', description: '避免夾腿與直接側睡壓迫，先從雙腳支撐的臀肌等長與低負荷訓練開始。', presetIds: ['hip-abduction-isometric', 'bridge', 'sit-to-stand'] },
+  { id: 'gtps-loading', condition: 'gtps', name: '可漸進負荷', description: '循序增加臀肌阻力與單腳承重能力。', presetIds: ['standing-hip-abduction', 'sit-to-stand', 'step-up'] },
+  { id: 'fai-control', condition: 'fai', name: '夾擠症狀明顯', description: '限制髖屈與內旋角度，先建立髖部控制與臀肌啟動。', presetIds: ['glute-set', 'clam-shell', 'hip-rotation-rom'] },
+  { id: 'fai-strength', condition: 'fai', name: '漸進肌力', description: '在不夾痛的範圍內加強髖部與軀幹肌力。', presetIds: ['bridge', 'side-lying-abduction', 'mini-squat'] },
+  { id: 'adductor-acute', condition: 'adductor-strain', name: '急性期', description: '在不痛範圍內開始等長訓練，維持一般走動。', presetIds: ['adductor-isometric', 'glute-set', 'walking'] },
+  { id: 'adductor-loading', condition: 'adductor-strain', name: '漸進負荷', description: '逐步增加內收肌的活動範圍與阻力。', presetIds: ['adductor-progression', 'adductor-isometric', 'mini-squat'] },
+  { id: 'pht-isometric', condition: 'hamstring-tendinopathy', name: '疼痛較敏感', description: '以等長訓練降低疼痛，避免壓迫性的伸展。', presetIds: ['hamstring-isometric', 'glute-set', 'bridge'] },
+  { id: 'pht-loading', condition: 'hamstring-tendinopathy', name: '可漸進負荷', description: '從中立髖角度開始，逐步增加腿後肌負荷。', presetIds: ['long-lever-bridge', 'hip-hinge-load', 'hamstring-isometric'] },
+  { id: 'dgs-relief', condition: 'deep-gluteal', name: '症狀敏感', description: '以神經滑動與溫和的臀部伸展為主。', presetIds: ['sciatic-nerve-glide', 'piriformis-stretch', 'glute-set'] },
+  { id: 'dgs-strength', condition: 'deep-gluteal', name: '加入臀部肌力', description: '症狀減輕後，訓練臀部肌群與髖部控制。', presetIds: ['clam-shell', 'bridge', 'standing-hip-abduction'] },
+  { id: 'thr-early', condition: 'post-hip-replacement', name: '早期（在限制內）', description: '以踝幫浦、臀肌啟動與坐站轉位為主，嚴守姿勢限制。', presetIds: ['ankle-pumps', 'glute-set', 'seated-marching'] },
+  { id: 'thr-function', condition: 'post-hip-replacement', name: '功能恢復期', description: '逐步恢復站立肌力、步行耐力與平衡。', presetIds: ['sit-to-stand', 'standing-hip-abduction', 'walking'] },
+]

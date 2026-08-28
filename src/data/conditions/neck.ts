@@ -1,0 +1,182 @@
+import type { Condition, Subtype } from '../../types'
+
+export const neckConditions: Condition[] = [
+  {
+    id: 'neck-pain', code: 'n1', name: '非特異性頸痛', aka: '機械性頸痛', hint: '活動受限／姿勢相關', region: 'neck',
+    keywords: ['脖子', '頸椎', '落枕', '肩頸', '頸痛'],
+    stageHint: '依症狀敏感度與控制能力選擇',
+    safetyHint: '新出現走路不穩、手部笨拙、雙側麻木，或突發劇烈頭痛／暈眩；',
+    education: {
+      what: '頸部的肌肉、關節與韌帶受到刺激而疼痛，影像檢查通常找不到單一「壞掉」的構造。',
+      why: '長時間固定姿勢、睡姿不良、壓力與疲勞會讓頸部肌肉持續緊繃，對活動變得敏感。',
+      course: '多數人在數週內明顯改善。維持活動比完全休息恢復得快，偶爾復發也很常見。',
+      myth: '「頸椎退化」在中年後很常見，不等於一定會痛，也不代表不能活動或運動。',
+    },
+    lifestyle: [
+      '每 30–40 分鐘起身活動一下，把螢幕墊高到視線高度。',
+      '睡覺時枕頭高度以能維持頭與身體成一直線為準，側睡可在頸下多墊一點。',
+      '短時間熱敷（10–15 分鐘）可幫助放鬆，但不要取代活動。',
+      '不建議請人用力扳脖子或做劇烈的頸部甩動。',
+    ],
+    followUp: [
+      '規律運動 4–6 週仍無明顯改善，請回診重新評估。',
+      '出現手臂麻木無力、走路不穩、手部變笨拙，請提早回診。',
+      '單純頸痛通常不需要立刻安排影像檢查；有神經症狀或外傷史時才需要。',
+    ],
+  },
+  {
+    id: 'cervical-radiculopathy', code: 'n2', name: '頸神經根病變', aka: '頸椎神經根壓迫', hint: '頸痛合併單側手臂放射痛／麻', region: 'neck',
+    keywords: ['神經根', '手麻', '頸椎壓迫', '放射痛', '椎間盤'],
+    stageHint: '依神經症狀的敏感度決定滑動或肌力訓練',
+    safetyHint: '雙側手麻、走路不穩、手部精細動作變差（疑似脊髓病變），或進行性肌肉無力；',
+    education: {
+      what: '頸椎的神經根受到壓迫或發炎，症狀沿著手臂往下走，可能有麻、刺痛或無力。',
+      why: '椎間盤突出或退化造成的骨刺讓神經通道變窄，神經對牽拉與壓迫變得敏感。',
+      course: '多數人在 6–12 週內逐漸改善，麻的範圍會慢慢往肩膀方向縮回（往近端集中是好轉的訊號）。',
+      myth: '不是所有神經壓迫都需要手術。多數人以復健與藥物就能改善，手術主要保留給持續無力或保守治療無效者。',
+    },
+    lifestyle: [
+      '避免長時間低頭與把頭往後仰再轉向患側的姿勢。',
+      '睡覺時可讓患側手臂稍微墊高，減少神經牽拉。',
+      '症狀往手指延伸代表過度，往肩膀縮回代表方向正確——用這個原則調整所有活動。',
+      '避免提重物與長時間手臂懸空的工作。',
+    ],
+    followUp: [
+      '手臂或手部力量持續變差（拿不住東西、開不了瓶蓋），請盡快回診。',
+      '保守治療 6–8 週仍無改善，可討論影像檢查與進一步治療。',
+      '出現雙手麻木、走路不穩或大小便異常，請立即就醫。',
+    ],
+  },
+  {
+    id: 'cervicogenic-headache', code: 'n3', name: '頸源性頭痛', aka: 'Cervicogenic headache', hint: '頸部引起的單側頭痛', region: 'neck',
+    keywords: ['頭痛', '後腦痛', '偏頭痛', '頸因性'],
+    stageHint: '以上頸段控制與肩頸耐力為主',
+    safetyHint: '突發如雷擊般劇烈頭痛、發燒合併脖子僵硬、頭痛型態與過去完全不同或伴隨神經學缺損；',
+    education: {
+      what: '疼痛來源在上段頸椎，但痛感被轉移到後腦、太陽穴或眼睛周圍，通常是單側且側邊固定。',
+      why: '上頸段的關節與肌肉和頭部的感覺神經共用傳導路徑，頸部問題因此會被大腦「誤讀」成頭痛。',
+      course: '對頸部治療與運動反應通常不錯，多數在數週到數月內改善，需要持續練習避免復發。',
+      myth: '不是所有頭痛都是偏頭痛。頸源性頭痛通常不會左右換邊，也少有畏光、噁心等典型偏頭痛症狀。',
+    },
+    lifestyle: [
+      '減少長時間低頭滑手機與趴睡。',
+      '規律作息與睡眠，疲勞與壓力常是誘發因子。',
+      '記錄頭痛發作的時間與當下姿勢，回診時提供給醫師。',
+      '避免長期依賴止痛藥；每週使用超過 2–3 天請告知醫師。',
+    ],
+    followUp: [
+      '運動 4–6 週未改善，或頭痛頻率增加，請回診調整。',
+      '頭痛型態改變、次數明顯變多，或出現視力變化，請提早就醫。',
+      '突發劇烈頭痛、發燒合併頸部僵硬，請立即急診。',
+    ],
+  },
+  {
+    id: 'whiplash', code: 'n4', name: '揮鞭式頸部傷害', aka: 'WAD', hint: '車禍或撞擊後的頸部症狀', region: 'neck',
+    keywords: ['車禍', '追撞', '揮鞭', '外傷', '頸部拉傷'],
+    stageHint: '急性期以恢復活動為主，之後才加入負荷',
+    safetyHint: '高風險受傷機轉、頸椎中線壓痛、四肢麻木無力，或尚未依加拿大頸椎準則排除骨折者；',
+    education: {
+      what: '頸部在快速前後晃動中受傷，造成肌肉、關節與軟組織的疼痛與僵硬，常在事發後 1–2 天才最明顯。',
+      why: '突然的加速減速讓頸部超出正常活動範圍，組織受到拉扯，神經系統也會變得對疼痛敏感。',
+      course: '多數人在 2–3 個月內明顯恢復。早期恢復日常活動比戴頸圈休息效果更好。',
+      myth: '長時間戴頸圈不動反而會讓恢復變慢、肌肉更無力，除非醫師明確指示，不建議整天配戴。',
+    },
+    lifestyle: [
+      '在可忍受範圍內盡早恢復日常活動與工作，不要整天臥床。',
+      '前幾天可短時間熱敷或冷敷緩解不適，以自己覺得舒服的為準。',
+      '睡眠受影響時告知醫師，睡眠不足會放大疼痛。',
+      '車禍後的焦慮與擔心是常見的，主動說出來有助於復原。',
+    ],
+    followUp: [
+      '症狀在 6 週後仍未改善，或反而變嚴重，請回診。',
+      '出現手腳麻木無力、走路不穩、吞嚥困難，請立即就醫。',
+      '若牽涉保險或工作證明，請於回診時一併提出。',
+    ],
+  },
+  {
+    id: 'myofascial-neck', code: 'n5', name: '肩頸肌筋膜疼痛', aka: '激痛點症候群', hint: '局部緊繃帶與轉移痛', region: 'neck',
+    keywords: ['肌筋膜', '激痛點', '斜方肌', '硬塊', '痠痛'],
+    stageHint: '先降低敏感度，再建立耐力',
+    safetyHint: '不明原因體重減輕、夜間持續痛醒、發燒，或腫塊持續變大；',
+    education: {
+      what: '肌肉裡出現緊繃的帶狀區域與壓痛點，按下去會痛，有時會把疼痛傳到頭部或手臂。',
+      why: '長時間低負荷的持續收縮（久坐打字、單肩背重物、壓力緊繃）讓局部肌肉無法完全放鬆。',
+      course: '改變誘發因素並加入規律活動後，多數在數週內改善，但容易在忙碌或壓力大時復發。',
+      myth: '一直用力按壓或推拿硬塊不會讓它消失，過度按壓反而可能讓局部更敏感。',
+    },
+    lifestyle: [
+      '把重複性動作拆短：每 30 分鐘換個姿勢或做一次伸展。',
+      '背包改雙肩背、電腦滑鼠靠近身體、手肘有支撐。',
+      '溫熱敷後再做伸展，通常比單純按摩持久。',
+      '睡眠、壓力與運動量三者一起處理，效果比只治療局部好。',
+    ],
+    followUp: [
+      '規律運動 4–6 週未改善，可回診討論其他治療。',
+      '疼痛範圍擴大、出現手麻無力，請回診重新評估。',
+      '合併不明原因體重減輕、夜間痛醒或發燒，請盡快就醫。',
+    ],
+  },
+  {
+    id: 'tmj', code: 'n6', name: '顳顎關節障礙', aka: 'TMD', hint: '張口痛／喀聲／咀嚼不適', region: 'neck',
+    keywords: ['顳顎', '下巴', '張口', '咬合', '喀喀聲', '磨牙'],
+    stageHint: '先減少關節負荷，再練習控制',
+    safetyHint: '下顎卡住無法閉合、外傷後咬合明顯改變、臉部腫脹發燒，或合併聽力急速變化；',
+    education: {
+      what: '顳顎關節與周圍咀嚼肌的疼痛與功能問題，可能有張口受限、喀聲或咀嚼痠痛。',
+      why: '磨牙、緊咬、單側咀嚼與壓力會讓關節與肌肉長期負荷過大。喀聲本身很常見，不一定代表受傷。',
+      course: '多數屬於良性且會波動，配合減少負荷與運動治療，數週到數月內會改善。',
+      myth: '有喀聲不等於需要手術或矯正。多數顳顎問題以保守治療處理即可。',
+    },
+    lifestyle: [
+      '避免咬硬物、嚼口香糖、啃指甲與長時間大口張嘴。',
+      '牙齒平時應該分開、嘴唇閉合、舌尖輕頂上顎，這是放鬆的休息位置。',
+      '打呵欠時用手托住下巴，限制張口幅度。',
+      '睡覺會磨牙者，請與牙科討論咬合板。',
+    ],
+    followUp: [
+      '運動與生活調整 4–6 週未改善，請回診或轉介牙科／口腔顎面外科。',
+      '張口寬度持續變小、或關節突然卡住，請盡快就醫。',
+      '合併嚴重頭痛、耳部症狀或臉部麻木，請提早回診。',
+    ],
+  },
+  {
+    id: 'thoracic-outlet', code: 'n7', name: '胸廓出口症候群', aka: 'TOS', hint: '手臂上舉後麻脹／無力', region: 'neck',
+    keywords: ['胸廓出口', '手麻', '鎖骨', '肋骨', '手脹'],
+    stageHint: '先改善姿勢與呼吸，再漸進肩帶肌力',
+    safetyHint: '手部發白發紫、突發腫脹、脈搏減弱或摸不到（疑似血管型），須立即評估；',
+    education: {
+      what: '通往手臂的神經或血管在頸部與鎖骨之間的通道受到壓迫，抬手或維持某些姿勢時出現麻、脹或無力。',
+      why: '姿勢、肩帶肌肉失衡、頸部肌肉緊繃或先天構造（如頸肋）讓通道變窄。',
+      course: '神經型佔絕大多數，以運動與姿勢治療為主，多數在數個月內逐步改善。',
+      myth: '手麻不一定都是頸椎壓迫或腕隧道；位置與誘發姿勢不同，處理方式也不同。',
+    },
+    lifestyle: [
+      '避免長時間高舉手臂工作、背單肩重包與趴睡壓迫肩膀。',
+      '練習用橫膈呼吸，減少頸部肌肉代償。',
+      '工作時讓手肘有支撐、鍵盤靠近身體。',
+      '症狀發作時把手放下休息，不要硬撐完成動作。',
+    ],
+    followUp: [
+      '運動 6–8 週未改善，請回診討論進一步檢查。',
+      '出現手部無力萎縮、持續腫脹或膚色改變，請立即就醫。',
+      '需要時可安排神經傳導檢查或血管影像。',
+    ],
+  },
+]
+
+export const neckSubtypes: Subtype[] = [
+  { id: 'neck-sensitive', condition: 'neck-pain', name: '較敏感／活動受限', description: '以舒適活動度與低負荷頸肩控制開始。', presetIds: ['chin-tuck', 'neck-rotation', 'scapular-retraction'] },
+  { id: 'neck-recovery', condition: 'neck-pain', name: '恢復控制／耐力', description: '症狀較穩定，可增加頸部控制與肩胛帶耐力。', presetIds: ['chin-tuck', 'scapular-retraction', 'wall-slide'] },
+  { id: 'radic-irritable', condition: 'cervical-radiculopathy', name: '神經症狀敏感', description: '以減壓姿勢與非常溫和的神經滑動為主，暫不加負荷。', presetIds: ['cervical-nerve-glide', 'chin-tuck', 'scapular-retraction'] },
+  { id: 'radic-recovery', condition: 'cervical-radiculopathy', name: '症狀往近端集中', description: '麻木範圍縮回肩膀後，可加入頸部深層肌與肩帶肌力。', presetIds: ['deep-neck-flexor', 'band-row', 'cervical-nerve-glide'] },
+  { id: 'ch-sensitive', condition: 'cervicogenic-headache', name: '發作頻繁／較敏感', description: '先放鬆上頸段並建立輕度的頸部控制。', presetIds: ['suboccipital-release', 'chin-tuck', 'upper-trap-stretch'] },
+  { id: 'ch-endurance', condition: 'cervicogenic-headache', name: '穩定／建立耐力', description: '加入頸部深層肌與肩胛帶耐力訓練，降低復發。', presetIds: ['deep-neck-flexor', 'scapular-retraction', 'thoracic-extension-chair'] },
+  { id: 'whiplash-acute', condition: 'whiplash', name: '急性期（前 2–4 週）', description: '已排除骨折，以恢復活動與減少恐懼為主，不做阻力訓練。', presetIds: ['neck-rotation', 'chin-tuck', 'shoulder-shrug-control'] },
+  { id: 'whiplash-recovery', condition: 'whiplash', name: '恢復期', description: '疼痛趨穩後，加入頸部與肩帶的控制及耐力訓練。', presetIds: ['deep-neck-flexor', 'cervical-isometric', 'band-row'] },
+  { id: 'myofascial-relief', condition: 'myofascial-neck', name: '緊繃疼痛明顯', description: '以伸展與溫和活動降低敏感度。', presetIds: ['upper-trap-stretch', 'levator-stretch', 'neck-rotation'] },
+  { id: 'myofascial-endurance', condition: 'myofascial-neck', name: '建立耐力', description: '加入肩胛帶耐力與胸椎活動，減少反覆發作。', presetIds: ['scapular-retraction', 'band-row', 'thoracic-extension-chair'] },
+  { id: 'tmj-acute', condition: 'tmj', name: '疼痛較明顯', description: '先減少關節負荷，以放鬆與小範圍控制為主。', presetIds: ['jaw-opening-control', 'upper-trap-stretch', 'diaphragm-breathing'] },
+  { id: 'tmj-control', condition: 'tmj', name: '練習控制與肌力', description: '疼痛較穩定後，加入下顎等長與頸部姿勢訓練。', presetIds: ['jaw-isometric', 'jaw-opening-control', 'chin-tuck'] },
+  { id: 'tos-postural', condition: 'thoracic-outlet', name: '姿勢與呼吸優先', description: '先減少通道壓迫：呼吸模式、肩帶位置與溫和神經滑動。', presetIds: ['diaphragm-breathing', 'brachial-plexus-slider', 'scapular-retraction'] },
+  { id: 'tos-progressive', condition: 'thoracic-outlet', name: '漸進肩帶肌力', description: '症狀較穩定後，加入肩胛與上背肌力訓練。', presetIds: ['band-row', 'wall-push-plus', 'thoracic-extension-chair'] },
+]
