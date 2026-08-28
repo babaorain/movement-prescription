@@ -1,6 +1,8 @@
 # 視覺 fidelity ledger
 
-最終 QA：2026-08-11。以 Codex in-app browser 在桌機與 390×844 手機視窗驗證，並將「常見診斷庫」實作截圖和 ImageGen 概念稿並排檢視。
+## 運動處方與診斷庫（2026-08-11）
+
+以 Codex in-app browser 在桌機與 390×844 手機視窗驗證，並將「常見診斷庫」實作截圖和 ImageGen 概念稿並排檢視。
 
 | 比較點 | 概念稿 | 最終實作 | 結果 |
 | --- | --- | --- | --- |
@@ -18,19 +20,36 @@
 | 首屏可讀性 | 標題、診斷區與病人預覽同時可見 | 桌機保留同一資訊層級；診斷庫向下延伸，不壓縮點擊目標 | 忠實 |
 | 多診斷圖像 | 各部位使用一致的極簡臨床線稿 | 新增 13 張原創線稿，並讓相近動作共用三聯示意，避免錯圖 | 忠實 |
 
-## 驗證截圖
+原驗證截圖：`docs/screenshots/doctor-desktop-final.png`、`patient-mobile-final.png`、`doctor-desktop-library.png`、`patient-mobile-library.png`。
 
-- `docs/screenshots/doctor-desktop-final.png`
-- `docs/screenshots/patient-mobile-final.png`
-- `docs/screenshots/doctor-desktop-library.png`
-- `docs/screenshots/patient-mobile-library.png`
-
-## 概念稿
-
-- `docs/concepts/doctor-builder.png`
-- `docs/concepts/patient-mobile.png`
-- `docs/concepts/doctor-diagnosis-library.png`
-
-## 上線後專家審查
+原概念稿：`docs/concepts/doctor-builder.png`、`patient-mobile.png`、`doctor-diagnosis-library.png`。
 
 2026-08-10 以 Claude Opus 5 High 針對義診場景做第二輪成品審查，採納項目與保留判斷記錄於 `docs/claude-review-2026-08-10.md`。
+
+---
+
+## PE／DD 工作台（2026-08-28）
+
+比較日期：2026-08-28
+
+概念稿：[`concepts/pe-dd-desktop.png`](concepts/pe-dd-desktop.png)、[`concepts/pe-dd-mobile.png`](concepts/pe-dd-mobile.png)
+
+實作驗證：本機 production build，以 agent-browser 在 1440×1000、1024×900、390×844 測試；實作截圖暫存於 `C:\Users\USER\.codex\visualizations\`，不納入產品 bundle。
+
+| 核對點 | 概念稿意圖 | 實作結果 | 狀態 |
+|---|---|---|---|
+| 品牌與導覽 | 白底、墨藍字、emerald active underline；運動處方／PE-DD 雙入口 | 共用 `DoctorTopbar`，桌機置中、手機保留兩個工具入口與 active indicator | 符合 |
+| 色彩與表面 | 無漸層；白、navy、emerald、pale mint、細灰框 | 完全沿用現有品牌 token，沒有新增漸層或裝飾性玻璃效果 | 符合 |
+| 模式與部位 | 快速／完整雙模式，九部位單列選擇 | 桌機九欄、手機水平捲動；active 部位為 emerald 實底 | 符合 |
+| PE 卡片資訊 | 方法、陽性準則、Sn、Sp、陽性意義、來源與結果按鈕 | 每張卡皆具完整欄位；研究不足時明示「無穩定估計」；首張預設展開，其餘可展開 | 符合並加強證據限制 |
+| DD 呈現 | 桌機右欄、手機接在檢查下方；清楚標示非機率 | 右欄 sticky、≤820px 改 inline；列出支持／反對檢查，保留「支持度不是機率」警語 | 符合 |
+| 義診速度 | 一屏可切部位與快速／完整模式 | 完成範圍確認後，桌機在首屏看到 workspace；手機將 hero 壓縮並隱藏統計，快速序列在短距離捲動內出現 | 符合 |
+| 響應式 | 390px 仍可操作、沒有全頁水平溢位 | 390px page width 為 375px（扣除 scrollbar），只有部位列刻意水平捲動；所有結果按鈕維持可點擊高度 | 符合 |
+| 可驗證性 | 數字與來源可直接檢查 | PubMed／PMC 來源可點開；general PE 不製造假連結，改顯示證據不足說明 | 符合並修正概念稿未定義處 |
+
+## 有意識的差異
+
+1. 概念稿直接進入 PE；實作依醫師要求新增「先排除」範圍閘門。完成後桌機壓成單列、手機壓成小卡，保留安全性但降低操作摩擦。
+2. 概念稿 DD 只示範前三名；實作保留該部位全部候選，避免低排名鑑別被介面直接消失。結果仍明示不是診斷。
+3. 概念稿把 PE 分成「觀察／神經／特殊」大段；實作用順序卡直接完成，減少義診現場多一層展開。分類仍顯示在每張卡上。
+4. 概念稿手機底部有固定「繼續完整檢查」按鈕；實作將按鈕放在快速序列末端，避免固定 CTA 遮住較長的證據與 DD 內容。

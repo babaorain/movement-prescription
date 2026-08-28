@@ -1,4 +1,4 @@
-const CACHE_NAME = 'movement-prescription-v6'
+const CACHE_NAME = 'movement-prescription-v8'
 const APP_SHELL = [
   '/',
   '/favicon.svg',
@@ -13,7 +13,6 @@ const APP_SHELL = [
   '/exercises/press-up.png',
   '/exercises/standing-extension.png',
   '/exercises/knee-to-chest.png',
-  '/exercises/abdominal-brace.png',
   '/exercises/bridge.png',
   '/exercises/walking.png',
   '/exercises/neck-control.png',

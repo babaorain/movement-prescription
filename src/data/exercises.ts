@@ -1,0 +1,758 @@
+import type { Exercise } from '../types'
+
+/**
+ * 動作庫。
+ *
+ * - `code` 是網址短碼，必須全域唯一；已發出的 QR 依賴它，不可回頭修改。
+ * - `image` 只在既有線稿確實畫得出這個動作時才填。沒有相符圖像時留空，
+ *   病人端改以放大的步驟文字呈現，避免圖文不符讓病人做錯動作。
+ *   待補的圖像列在 docs/exercise-art-todo.md。
+ */
+export const exercises: Exercise[] = [
+  // ── 頸部與顳顎 ──────────────────────────────────────────────
+  {
+    id: 'chin-tuck', code: 'n01', name: '下巴微收', shortName: '下巴微收', image: '/exercises/neck-control.png', regions: ['neck'],
+    summary: '輕收下巴，讓頭部回到軀幹正上方。',
+    steps: ['坐直或靠牆，眼睛保持水平。', '下巴輕輕往後收，像做出小小雙下巴。', '維持自然呼吸後放鬆，不必低頭。'],
+    keyCue: '力量要輕；若出現暈眩、手麻加劇就停止。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'neck-rotation', code: 'n02', name: '頸部舒適轉動', shortName: '頸部轉動', image: '/exercises/neck-control.png', regions: ['neck'],
+    summary: '在舒適範圍內左右轉頭，維持頸部活動。',
+    steps: ['坐直，肩膀放鬆，眼睛平視前方。', '緩慢轉頭看向一側，到輕微緊繃處。', '回到中間，再換另一側。'],
+    keyCue: '不要甩動或硬壓角度；不追求喀喀聲。', dose: { type: 'reps', reps: 6, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'scapular-retraction', code: 'n03', name: '肩胛骨後收', shortName: '肩胛後收', image: '/exercises/neck-control.png', regions: ['neck', 'shoulder', 'spine', 'elbow-hand'],
+    summary: '放鬆肩膀，溫和將兩側肩胛骨向後靠近。',
+    steps: ['坐直或站直，雙手自然垂下。', '肩膀保持下沉，肩胛骨輕輕向後靠近。', '維持數秒後完全放鬆。'],
+    keyCue: '不要聳肩，也不要用力挺胸或憋氣。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'deep-neck-flexor', code: 'n04', name: '仰躺頸部深層肌訓練', shortName: '頸部深層肌', image: '/exercises/neck-control.png', regions: ['neck'],
+    summary: '仰躺輕點頭，訓練頸部前側的深層穩定肌。',
+    steps: ['仰躺屈膝，頭下墊薄毛巾，眼睛看天花板。', '像點頭說「是」一樣，下巴輕輕往喉嚨方向收。', '維持約 5 秒並正常呼吸，再完全放鬆。'],
+    keyCue: '頭不要抬離枕頭；脖子前側青筋浮起代表用力過度。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'cervical-isometric', code: 'n05', name: '頸部等長收縮', shortName: '頸部等長', image: '/exercises/neck-control.png', regions: ['neck'],
+    summary: '用手掌抵住頭部，出力但頭不移動。',
+    steps: ['坐直，手掌放在額頭（或側邊、後腦）。', '頭輕輕推向手掌，手掌抵住讓頭保持不動。', '維持約 5 秒後放鬆，依醫師指示換方向。'],
+    keyCue: '只用三成力；出現頭暈、耳鳴或手麻加重立刻停止。', dose: { type: 'reps', reps: 6, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'upper-trap-stretch', code: 'n06', name: '上斜方肌伸展', shortName: '肩頸伸展', regions: ['neck', 'shoulder'],
+    summary: '頭側倒並讓對側肩膀下沉，拉開肩頸上方。',
+    steps: ['坐直，一手輕抓椅子邊緣固定肩膀。', '頭往對側耳朵靠肩的方向慢慢側倒。', '感到肩頸上方拉伸後停留約 20 秒，再換邊。'],
+    keyCue: '只到拉伸感，不要用手硬壓頭；不要聳肩。', dose: { type: 'reps', reps: 3, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'levator-stretch', code: 'n07', name: '提肩胛肌伸展', shortName: '頸後外側伸展', regions: ['neck'],
+    summary: '頭轉向一側再低頭看腋下，拉開頸後外側。',
+    steps: ['坐直，一手抓住椅子邊緣固定肩膀。', '頭先轉向對側約 45 度，再慢慢低頭看向腋下方向。', '感到頸後外側拉伸後停留約 20 秒，再換邊。'],
+    keyCue: '動作要慢；有手麻或頭暈就停止。', dose: { type: 'reps', reps: 3, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'suboccipital-release', code: 'n08', name: '枕下肌放鬆', shortName: '枕下放鬆', regions: ['neck'],
+    summary: '仰躺以毛巾捲托住後腦下緣，配合微收下巴放鬆。',
+    steps: ['仰躺，把小毛巾捲橫放在後腦與脖子交界處。', '放鬆躺著，下巴非常輕微地往內收。', '正常呼吸，停留 1–2 分鐘後起身。'],
+    keyCue: '不要壓在脖子中段；起身時先側身再坐起。', dose: { type: 'duration', minutes: 3, frequency: '每天 1 次' },
+  },
+  {
+    id: 'cervical-nerve-glide', code: 'n09', name: '上肢神經滑動', shortName: '神經滑動', regions: ['neck', 'shoulder', 'elbow-hand'],
+    summary: '手臂與頸部反向配合，讓神經在通道中前後滑動。',
+    steps: ['坐直，患側手臂往側邊打開到肩膀高度，手肘伸直、手掌朝上。', '手腕往後翹的同時，頭慢慢倒向同側。', '手腕放鬆的同時，頭回正並倒向對側；來回緩慢進行。'],
+    keyCue: '只在輕微牽拉感內來回，不要拉到麻痛加重或殘留。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每天 2 次' },
+  },
+  {
+    id: 'jaw-opening-control', code: 'n10', name: '下顎開合控制', shortName: '下顎開合', regions: ['neck'],
+    summary: '舌尖頂上顎，練習不偏斜的張口與閉口。',
+    steps: ['坐直，對著鏡子，舌尖輕頂上排牙齒後方。', '維持舌尖位置，慢慢張口到舌尖將離開為止。', '確認下巴走直線不偏斜，再慢慢閉合。'],
+    keyCue: '不要張到出現喀聲或卡住；有疼痛就縮小範圍。', dose: { type: 'reps', reps: 6, sets: 2, frequency: '每天 3 次' },
+  },
+  {
+    id: 'jaw-isometric', code: 'n11', name: '下顎等長收縮', shortName: '下顎等長', regions: ['neck'],
+    summary: '手指抵住下巴，出力但下顎不移動。',
+    steps: ['坐直，牙齒微微分開，舌尖輕頂上顎。', '手指放在下巴下方或側面，下顎輕輕出力抵住手指。', '維持約 5 秒後放鬆，依指示換方向。'],
+    keyCue: '力量非常輕；不要咬緊牙關。', dose: { type: 'reps', reps: 6, sets: 2, frequency: '每天 2 次' },
+  },
+  {
+    id: 'diaphragm-breathing', code: 'n12', name: '橫膈呼吸', shortName: '橫膈呼吸', regions: ['neck', 'spine', 'shoulder'],
+    summary: '用肚子帶動呼吸，減少頸肩代償出力。',
+    steps: ['仰躺屈膝或坐靠椅背，一手放胸口、一手放肚子。', '用鼻子慢慢吸氣，讓肚子的手先鼓起，胸口的手盡量不動。', '嘴巴慢慢吐氣，讓肚子回落；重複並保持節奏。'],
+    keyCue: '不要用力吸到肩膀上抬；感到頭暈就恢復平常呼吸。', dose: { type: 'duration', minutes: 5, frequency: '每天 1 次' },
+  },
+  {
+    id: 'brachial-plexus-slider', code: 'n13', name: '胸廓出口神經滑動', shortName: '胸口神經滑動', regions: ['neck', 'shoulder'],
+    summary: '在不引發麻木的範圍內，讓鎖骨下方通道的神經前後滑動。',
+    steps: ['坐直，肩膀放鬆下沉，患側手肘彎曲貼近身體。', '手掌朝上慢慢往側邊打開，同時頭倒向同側。', '手回到身體旁的同時，頭回正；緩慢來回。'],
+    keyCue: '一出現麻木或手變白就立刻縮小範圍或停止。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每天 1 次' },
+  },
+
+  // ── 肩部 ────────────────────────────────────────────────────
+  {
+    id: 'pendulum', code: 's01', name: '鐘擺運動', shortName: '鐘擺', image: '/exercises/pendulum.png', regions: ['shoulder'],
+    summary: '讓手臂放鬆，用身體帶動小幅度擺動。',
+    steps: ['健側手扶桌，身體微微前傾。', '患側手臂完全放鬆，自然垂下。', '用身體帶動前後、左右或小圈擺動。'],
+    keyCue: '肩膀不要出力；幅度小、動作順。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 2 次' },
+  },
+  {
+    id: 'table-slide', code: 's02', name: '桌面前滑', shortName: '桌面前滑', image: '/exercises/table-slide.png', regions: ['shoulder'],
+    summary: '利用桌面支撐，溫和帶動肩膀向前。',
+    steps: ['面對桌子坐好，雙手放在毛巾上。', '身體向前，讓手沿桌面慢慢滑遠。', '到輕微緊繃處停一下，再慢慢回來。'],
+    keyCue: '不要聳肩，不要硬壓到明顯疼痛。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每天 2 次' },
+  },
+  {
+    id: 'cane-er', code: 's03', name: '棍棒輔助外轉', shortName: '輔助外轉', image: '/exercises/cane-er.png', regions: ['shoulder'],
+    summary: '手肘貼身，以健側手溫和帶動外轉。',
+    steps: ['仰躺或坐好，雙手握住棍棒，手肘彎曲。', '患側手肘貼近身體，可夾一條小毛巾。', '健側手緩慢推動棍棒，帶患側手向外。'],
+    keyCue: '只到輕微緊繃，不追求角度。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每天 2 次' },
+  },
+  {
+    id: 'wall-slide', code: 's04', name: '牆面上滑', shortName: '牆面上滑', image: '/exercises/wall-slide.png', regions: ['neck', 'shoulder'],
+    summary: '手沿牆面向上滑，逐步增加抬手範圍。',
+    steps: ['面對牆站立，手掌或毛巾貼牆。', '手慢慢向上滑，身體保持直立。', '到可接受的緊繃處停一下，再控制回來。'],
+    keyCue: '肋骨不要翻起；疼痛維持可接受。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'cross-body', code: 's05', name: '橫向抱肩伸展', shortName: '抱肩伸展', image: '/exercises/cross-body.png', regions: ['shoulder'],
+    avoidFor: ['ac-joint'],
+    summary: '將手臂橫拉過胸，伸展肩膀後側。',
+    steps: ['坐好或站好，患側手臂抬到胸前。', '健側手托住手肘，輕輕往對側帶。', '感到肩後側拉伸，停留後放鬆。'],
+    keyCue: '身體不要轉；避免夾擠或尖銳痛。', dose: { type: 'reps', reps: 5, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'towel-ir', code: 's06', name: '毛巾背後伸展', shortName: '背後伸展', image: '/exercises/towel-ir.png', regions: ['shoulder'],
+    summary: '用毛巾輔助患側手在背後向上移動。',
+    steps: ['雙手在背後抓住毛巾，上方為健側手。', '健側手慢慢往上拉，帶動患側手上移。', '到輕微緊繃處停留，再慢慢放鬆。'],
+    keyCue: '保持胸口直立；不要猛拉。', dose: { type: 'reps', reps: 5, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'shoulder-er-isometric', code: 's07', name: '肩外轉等長收縮', shortName: '肩外轉等長', image: '/exercises/shoulder-isometric.png', regions: ['shoulder'],
+    summary: '手肘貼身，向外出力但不讓手臂移動。',
+    steps: ['側身站在牆邊，手肘彎曲並貼近身體。', '手背輕推牆面，維持肩膀與手肘不動。', '保持呼吸數秒，再完全放鬆。'],
+    keyCue: '只用中等以下力量；不要聳肩或憋氣。', dose: { type: 'reps', reps: 6, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'shoulder-ir-isometric', code: 's08', name: '肩內轉等長收縮', shortName: '肩內轉等長', image: '/exercises/shoulder-isometric.png', regions: ['shoulder'],
+    summary: '手肘貼身，往內出力但不讓手臂移動。',
+    steps: ['側身站在牆邊，患側靠牆，手肘彎曲貼近身體。', '手掌輕推牆面，維持肩膀與手肘不動。', '保持呼吸數秒，再完全放鬆。'],
+    keyCue: '中等以下力量；肩膀不要往前捲。', dose: { type: 'reps', reps: 6, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'shoulder-abduction-isometric', code: 's09', name: '肩外展等長收縮', shortName: '肩外展等長', image: '/exercises/shoulder-isometric.png', regions: ['shoulder'],
+    summary: '手臂貼牆往外推，但手臂維持不動。',
+    steps: ['患側靠牆站立，手臂自然垂下、手肘微彎。', '手臂外側輕推牆面，維持身體與手臂不動。', '保持呼吸數秒，再完全放鬆。'],
+    keyCue: '不要聳肩；出力到會痛就減少力量。', dose: { type: 'reps', reps: 6, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'shoulder-flexion-isometric', code: 's10', name: '肩前舉等長收縮', shortName: '肩前舉等長', image: '/exercises/shoulder-isometric.png', regions: ['shoulder'],
+    summary: '拳頭抵牆往前推，手臂維持不動。',
+    steps: ['面對牆站立，手肘彎曲，拳頭或手掌抵住牆面。', '手臂往前推牆，維持手臂與身體不動。', '保持呼吸數秒，再完全放鬆。'],
+    keyCue: '中等以下力量；不要屏住呼吸。', dose: { type: 'reps', reps: 6, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'band-external-rotation', code: 's11', name: '彈力帶肩外轉', shortName: '彈力帶外轉', regions: ['shoulder'],
+    summary: '手肘貼身，用彈力帶做可控的肩外轉阻力訓練。',
+    steps: ['把彈力帶固定在肚臍高度，側身站立，患側手肘彎曲夾一條小毛巾。', '手肘保持貼身，前臂慢慢往外拉開。', '停一下，再用約 3 秒控制回到起始位置。'],
+    keyCue: '身體不要跟著轉；阻力從最輕的彈力帶開始。', dose: { type: 'reps', reps: 10, sets: 3, frequency: '每週 3 次' },
+  },
+  {
+    id: 'band-row', code: 's12', name: '彈力帶划船', shortName: '彈力帶划船', regions: ['shoulder', 'neck', 'spine'],
+    summary: '雙手向後拉彈力帶，訓練肩胛與上背肌群。',
+    steps: ['彈力帶固定在胸口高度，雙手握住，手臂向前伸直。', '肩膀下沉，手肘沿身體兩側往後拉，肩胛骨靠近。', '停一下，再慢慢回到起始位置。'],
+    keyCue: '不要聳肩或用身體後仰借力。', dose: { type: 'reps', reps: 10, sets: 3, frequency: '每週 3 次' },
+  },
+  {
+    id: 'scaption-raise', code: 's13', name: '斜前平面抬手', shortName: '斜前抬手', regions: ['shoulder'],
+    summary: '在身體斜前方 30 度的平面抬手，是肩膀較省力的方向。',
+    steps: ['站直，手臂放在身體斜前方約 30 度、拇指朝上。', '慢慢把手抬到可接受的高度，不必到頭頂。', '停一下，再用約 3 秒控制放下。'],
+    keyCue: '疼痛可接受即可；先徒手，之後才加輕重量。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每週 3 次' },
+  },
+  {
+    id: 'wall-push-plus', code: 's14', name: '牆面推撐加壓', shortName: '牆面推撐', regions: ['shoulder', 'neck'],
+    summary: '推牆到底後再多推一點，讓肩胛骨前伸貼住肋骨。',
+    steps: ['面對牆站立，雙手撐牆與肩同高同寬。', '手肘伸直不動，用肩胛骨把上半身再往後推一點。', '停一下，再讓肩胛骨慢慢回來。'],
+    keyCue: '不要聳肩或憋氣；動作幅度很小是正常的。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'prone-y-raise', code: 's15', name: '俯臥 Y 字抬手', shortName: 'Y 字抬手', regions: ['shoulder', 'spine'],
+    summary: '趴著把雙手往斜上方抬起，訓練下斜方肌。',
+    steps: ['趴在床上，額頭墊毛巾，雙手往斜上方伸成 Y 字、拇指朝上。', '肩膀先下沉遠離耳朵，再把手臂輕輕抬離床面。', '停約 3 秒，再慢慢放下。'],
+    keyCue: '不要聳肩，也不要用腰部拱起借力。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每週 3 次' },
+  },
+  {
+    id: 'sleeper-stretch', code: 's16', name: '側躺肩內轉伸展', shortName: '側躺伸展', regions: ['shoulder'],
+    summary: '側躺固定肩胛，溫和伸展肩膀後側。',
+    steps: ['患側在下側躺，肩膀與手肘各彎曲 90 度，前臂朝上。', '用上方的手輕輕把前臂往床面壓。', '感到肩後側拉伸後停留約 20 秒，再放鬆。'],
+    keyCue: '只到拉伸感；出現肩前方夾痛就停止。', dose: { type: 'reps', reps: 3, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'supine-cane-flexion', code: 's17', name: '仰躺棍棒上舉', shortName: '仰躺上舉', image: '/exercises/cane-er.png', regions: ['shoulder'],
+    summary: '仰躺以健側手帶動，減少重力負擔地增加抬手範圍。',
+    steps: ['仰躺屈膝，雙手握住棍棒放在大腿上。', '手肘伸直，用健側手推動棍棒往頭頂方向舉起。', '到可接受的高度停一下，再慢慢放回。'],
+    keyCue: '肋骨不要翻起；不要甩動或硬推。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'shoulder-shrug-control', code: 's18', name: '聳肩下放控制', shortName: '聳肩控制', regions: ['shoulder', 'neck'],
+    summary: '緩慢聳肩再完全放下，練習肩帶的放鬆與控制。',
+    steps: ['站直或坐直，雙手自然垂下。', '雙肩慢慢往耳朵方向上提。', '停一下，再用約 3 秒讓肩膀完全落下並放鬆。'],
+    keyCue: '重點在「放下」那一段；不要憋氣。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 1 次' },
+  },
+
+  // ── 肘、腕、手 ──────────────────────────────────────────────
+  {
+    id: 'wrist-extension-isometric', code: 'a01', name: '伸腕等長收縮', shortName: '伸腕等長', image: '/exercises/wrist-loading.png', regions: ['elbow-hand'],
+    summary: '手腕想往上抬，以另一手抵住不讓它移動。',
+    steps: ['前臂放桌上，手掌朝下、手腕靠近桌緣。', '患側手腕想往上抬，另一手提供阻力。', '手腕保持不動，維持數秒後放鬆。'],
+    keyCue: '出力以可接受為準，不要握拳過緊。', dose: { type: 'reps', reps: 6, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'wrist-extension-eccentric', code: 'a02', name: '伸腕離心訓練', shortName: '伸腕離心', image: '/exercises/wrist-loading.png', regions: ['elbow-hand'],
+    summary: '用健手協助抬起，患側手腕慢慢控制放下。',
+    steps: ['前臂放桌上，手掌朝下，手握輕物。', '健側手協助把患側手腕抬高。', '放開健側手，由患側手腕慢慢下降。'],
+    keyCue: '下降至少 3 秒；負重從很輕開始。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每週 3 次' },
+  },
+  {
+    id: 'wrist-extensor-stretch', code: 'a03', name: '伸腕肌群伸展', shortName: '前臂外側伸展', image: '/exercises/wrist-loading.png', regions: ['elbow-hand'],
+    summary: '手肘伸直，將手腕與手指溫和向下帶。',
+    steps: ['手臂向前伸直，手掌朝下。', '另一手握住手背，輕輕將手腕向下彎。', '感到前臂外側拉伸後停留，再放鬆。'],
+    keyCue: '只有拉伸感，不要拉到肘外側明顯痛。', dose: { type: 'reps', reps: 5, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'wrist-flexor-stretch', code: 'a04', name: '屈腕肌群伸展', shortName: '前臂內側伸展', image: '/exercises/wrist-loading.png', regions: ['elbow-hand'],
+    summary: '手肘伸直、手掌朝上，將手腕溫和向下帶。',
+    steps: ['手臂向前伸直，手掌朝上。', '另一手握住手指，輕輕將手腕與手指往下帶。', '感到前臂內側拉伸後停留，再放鬆。'],
+    keyCue: '只有拉伸感；肘內側出現尖銳痛就縮小範圍。', dose: { type: 'reps', reps: 5, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'wrist-flexion-isometric', code: 'a05', name: '屈腕等長收縮', shortName: '屈腕等長', image: '/exercises/wrist-loading.png', regions: ['elbow-hand'],
+    summary: '手腕想往上握，以另一手抵住不讓它移動。',
+    steps: ['前臂放桌上，手掌朝上、手腕靠近桌緣。', '患側手腕想往上彎，另一手在手掌提供阻力。', '手腕保持不動，維持數秒後放鬆。'],
+    keyCue: '中等以下力量；不要用力握拳。', dose: { type: 'reps', reps: 6, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'wrist-flexion-eccentric', code: 'a06', name: '屈腕離心訓練', shortName: '屈腕離心', image: '/exercises/wrist-loading.png', regions: ['elbow-hand'],
+    summary: '用健手協助握起，患側手腕慢慢控制放下。',
+    steps: ['前臂放桌上，手掌朝上，手握輕物。', '健側手協助把患側手腕彎起。', '放開健側手，由患側手腕慢慢下降。'],
+    keyCue: '下降至少 3 秒；負重從很輕開始。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每週 3 次' },
+  },
+  {
+    id: 'grip-squeeze', code: 'a07', name: '握力訓練', shortName: '握力訓練', regions: ['elbow-hand'],
+    summary: '握住軟球或捲起的毛巾，做可接受的握放訓練。',
+    steps: ['坐好，手肘彎曲放在大腿或桌上，手握軟球或毛巾捲。', '慢慢握緊到中等力量，維持約 5 秒。', '完全放鬆手指後再重複。'],
+    keyCue: '握到會痛就減少力量；不要憋氣。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'forearm-rotation', code: 'a08', name: '前臂旋轉活動', shortName: '前臂旋轉', regions: ['elbow-hand'],
+    summary: '手肘貼身，做手掌翻上翻下的旋轉活動。',
+    steps: ['坐好，手肘彎曲 90 度並貼近身體，手握一支筆。', '手掌慢慢翻向上，到舒適範圍停一下。', '再慢慢翻向下，來回進行。'],
+    keyCue: '肩膀不要跟著轉；出現腕尺側尖銳痛就縮小範圍。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'median-nerve-glide', code: 'a09', name: '正中神經滑動', shortName: '正中神經滑動', regions: ['elbow-hand'],
+    summary: '手腕與手指配合開合，讓正中神經在腕隧道中滑動。',
+    steps: ['手肘彎曲貼身，手掌朝上、手指握拳。', '手指張開伸直，手腕慢慢往後翹。', '再彎回握拳、手腕放鬆；緩慢來回。'],
+    keyCue: '只在輕微牽拉感內做；麻木明顯加重就停止。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每天 3 次' },
+  },
+  {
+    id: 'ulnar-nerve-glide', code: 'a10', name: '尺神經滑動', shortName: '尺神經滑動', regions: ['elbow-hand'],
+    summary: '在不加重麻木的範圍內，讓尺神經在肘隧道滑動。',
+    steps: ['手臂往側邊打開，手掌朝上、手肘伸直。', '手腕往後翹，手肘慢慢彎曲，手掌朝向臉的方向。', '再慢慢伸直手肘回到起始；動作緩慢平順。'],
+    keyCue: '不要停在最末端硬撐；小指麻木加重就縮小範圍。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每天 2 次' },
+  },
+  {
+    id: 'tendon-gliding', code: 'a11', name: '手指肌腱滑動', shortName: '肌腱滑動', regions: ['elbow-hand'],
+    summary: '依序做出五種手形，讓手指屈肌腱完整滑動。',
+    steps: ['手掌張開伸直，手指併攏。', '依序做出：指節彎、平握拳、直角勾、完全握拳。', '每個位置停約 3 秒，再回到張開；緩慢完成一輪。'],
+    keyCue: '不要用另一手硬扳；卡住時停在卡住前的角度。', dose: { type: 'reps', reps: 5, sets: 3, frequency: '每天 3 次' },
+  },
+  {
+    id: 'finger-rom', code: 'a12', name: '手指關節活動', shortName: '手指活動', regions: ['elbow-hand'],
+    summary: '在不痛範圍內做手指的彎曲、伸直與分開。',
+    steps: ['手放在桌面上，手掌朝下、手指放鬆。', '手指慢慢彎起再完全伸直。', '再把手指張開後併攏；來回進行。'],
+    keyCue: '早上僵硬時可先泡溫水再做；不要硬扳關節。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 2 次' },
+  },
+  {
+    id: 'thumb-cmc-isometric', code: 'a13', name: '拇指等長收縮', shortName: '拇指等長', regions: ['elbow-hand'],
+    summary: '拇指輕壓另一手指腹，出力但不移動。',
+    steps: ['手放在桌上，拇指與食指指腹輕輕相抵成 O 形。', '拇指往食指方向輕輕出力，維持形狀不變形。', '維持約 5 秒後完全放鬆。'],
+    keyCue: '虎口不要塌陷；只用三成力。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'thumb-abduction', code: 'a14', name: '拇指外展訓練', shortName: '拇指外展', regions: ['elbow-hand'],
+    summary: '用橡皮筋提供輕阻力，訓練虎口周圍的穩定肌。',
+    steps: ['手掌貼桌面，把橡皮筋套在拇指與其餘手指外側。', '拇指慢慢往外張開對抗橡皮筋。', '停一下，再慢慢收回。'],
+    keyCue: '阻力要很輕；出現腕橈側尖銳痛就停止。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'radial-isometric', code: 'a15', name: '腕橈側等長收縮', shortName: '腕橈側等長', image: '/exercises/wrist-loading.png', regions: ['elbow-hand'],
+    summary: '拇指側朝上，手腕往上出力但不移動。',
+    steps: ['前臂放桌上，拇指朝上、手腕靠近桌緣。', '手腕想往拇指方向抬，另一手在手背橈側抵住。', '維持約 5 秒後完全放鬆。'],
+    keyCue: '力量以不誘發尖銳痛為準；不要握拳把拇指包起來。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'ulnar-deviation-load', code: 'a16', name: '腕尺側控制訓練', shortName: '腕尺側控制', image: '/exercises/wrist-loading.png', regions: ['elbow-hand'],
+    summary: '前臂放平，做小範圍且可控的腕尺側偏移。',
+    steps: ['前臂與手掌平放桌上，拇指朝上、手握輕物（如筆）。', '手腕慢慢往小指方向偏移一小段。', '停一下，再慢慢回正。'],
+    keyCue: '範圍要小；旋轉或撐地會痛時先不要做。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每週 3 次' },
+  },
+  {
+    id: 'wrist-rom', code: 'a17', name: '腕關節主動活動', shortName: '腕關節活動', image: '/exercises/wrist-loading.png', regions: ['elbow-hand'],
+    summary: '在舒適範圍內做手腕上下與左右的主動活動。',
+    steps: ['前臂放桌上，手腕與手掌懸在桌緣外。', '手腕慢慢往上翹再往下彎，各停一下。', '再往拇指側與小指側各偏移一次。'],
+    keyCue: '不要用另一手加壓；腫脹明顯增加就減量。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 2 次' },
+  },
+  {
+    id: 'elbow-rom', code: 'a18', name: '手肘主動活動', shortName: '手肘活動', regions: ['elbow-hand'],
+    summary: '在舒適範圍內做手肘的彎曲與伸直。',
+    steps: ['坐好，手臂放在桌上或身體旁邊。', '手肘慢慢彎曲到可接受的角度，停一下。', '再慢慢完全伸直；來回進行。'],
+    keyCue: '不要用力甩或壓；末端只到輕微緊繃。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 2 次' },
+  },
+
+  // ── 胸腰背與軀幹 ────────────────────────────────────────────
+  {
+    id: 'press-up', code: 't01', name: '俯臥撐起', shortName: '俯臥撐起', image: '/exercises/press-up.png', regions: ['spine'],
+    avoidFor: ['lumbar-stenosis', 'spondylolisthesis', 'vertebral-fracture'],
+    summary: '骨盆放鬆貼床，以手臂撐起上半身。',
+    steps: ['趴著，雙手放在肩膀兩側。', '臀部與腿放鬆，用手臂慢慢撐起上身。', '到舒適範圍後回到起始位置。'],
+    keyCue: '若腿部症狀往更遠處延伸，立即停止。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 2 次' },
+  },
+  {
+    id: 'standing-extension', code: 't02', name: '站姿後伸', shortName: '站姿後伸', image: '/exercises/standing-extension.png', regions: ['spine'],
+    avoidFor: ['lumbar-stenosis', 'spondylolisthesis', 'vertebral-fracture'],
+    summary: '站穩後，雙手支撐腰部，溫和向後伸展。',
+    steps: ['雙腳與肩同寬站穩，雙手扶住腰後。', '保持膝蓋伸直，身體緩慢向後。', '到舒適範圍後回正，稍停再重複。'],
+    keyCue: '動作慢；若腿痛往下延伸就停止。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 2 次' },
+  },
+  {
+    id: 'knee-to-chest', code: 't03', name: '單膝抱胸', shortName: '單膝抱胸', image: '/exercises/knee-to-chest.png', regions: ['spine', 'hip'],
+    summary: '仰躺將單膝溫和靠近胸口。',
+    steps: ['仰躺，雙膝彎曲、腳掌踩穩。', '雙手抱住一側大腿或膝下，往胸口帶。', '停留一下，放回後換邊。'],
+    keyCue: '肩頸放鬆；不要用力拉扯膝蓋。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'abdominal-brace', code: 't04', name: '腹部穩定收縮', shortName: '腹部穩定', image: '/exercises/abdominal-brace.png', regions: ['spine', 'hip'],
+    summary: '維持呼吸，輕收下腹，建立軀幹控制。',
+    steps: ['仰躺屈膝，雙腳踩穩，腰背自然。', '像準備咳嗽一樣，輕輕收緊下腹。', '正常呼吸數秒，再完全放鬆。'],
+    keyCue: '不要憋氣，也不要把腰用力壓平。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'bridge', code: 't05', name: '橋式', shortName: '橋式', image: '/exercises/bridge.png', regions: ['spine', 'hip', 'knee'],
+    summary: '收緊臀部，將骨盆平穩抬離床面。',
+    steps: ['仰躺屈膝，雙腳與髖同寬。', '輕收腹與臀部，將骨盆慢慢抬起。', '身體成斜線後停一下，再控制放下。'],
+    keyCue: '力量來自臀部；腰不要過度拱起。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每週 3 次' },
+  },
+  {
+    id: 'pelvic-tilt', code: 't06', name: '骨盆前後傾', shortName: '骨盆傾動', image: '/exercises/abdominal-brace.png', regions: ['spine'],
+    summary: '仰躺輕輕前後轉動骨盆，找回腰椎的活動與控制。',
+    steps: ['仰躺屈膝，雙腳踩穩，雙手放在骨盆兩側。', '輕輕把腰壓向床面，讓骨盆後傾。', '再讓腰自然拱起一點點，骨盆前傾；緩慢來回。'],
+    keyCue: '幅度小、用腹部帶動；不要憋氣或用力擠壓。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'cat-camel', code: 't07', name: '貓牛式', shortName: '貓牛式', regions: ['spine'],
+    summary: '四足跪姿下讓脊椎輪流拱起與下沉，恢復整體活動。',
+    steps: ['雙手在肩膀正下方、雙膝在髖部正下方，膝下可墊軟墊。', '慢慢把背拱起像貓，頭自然低下。', '再慢慢反向讓背下沉、胸口打開；來回進行。'],
+    keyCue: '在不痛範圍內；手腕不適可改握拳撐地。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'bird-dog', code: 't08', name: '鳥狗式', shortName: '鳥狗式', regions: ['spine', 'hip'],
+    summary: '四足跪姿伸出對側手腳，訓練軀幹抗旋轉的穩定度。',
+    steps: ['四足跪姿，輕收下腹，背部保持自然平坦。', '慢慢把一側手臂與對側腿伸直到與身體同高。', '停約 3 秒，控制收回後換邊。'],
+    keyCue: '骨盆不要傾斜；先只出手或只出腿也可以。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每週 3 次' },
+  },
+  {
+    id: 'dead-bug', code: 't09', name: '死蟲式', shortName: '死蟲式', image: '/exercises/abdominal-brace.png', regions: ['spine'],
+    summary: '仰躺輪流放下對側手腳，同時維持腰部穩定。',
+    steps: ['仰躺，雙膝彎曲抬起在髖部上方，雙手往天花板伸直。', '輕收下腹，慢慢把一手往頭頂、對側腿往前伸出。', '腰不要離開原來的位置，收回後換邊。'],
+    keyCue: '腰一拱起就縮小範圍；全程正常呼吸。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每週 3 次' },
+  },
+  {
+    id: 'side-plank-knee', code: 't10', name: '屈膝側棒式', shortName: '屈膝側棒', regions: ['spine', 'hip'],
+    summary: '側躺以手肘與膝蓋支撐，訓練軀幹側邊的穩定度。',
+    steps: ['側躺，手肘在肩膀正下方，雙膝彎曲約 90 度。', '把骨盆抬離床面，身體從頭到膝成一直線。', '維持約 10 秒後慢慢放下。'],
+    keyCue: '肩膀不要塌陷；腰痛加重就縮短時間。', dose: { type: 'reps', reps: 5, sets: 2, frequency: '每週 3 次' },
+  },
+  {
+    id: 'sciatic-nerve-glide', code: 't11', name: '坐骨神經滑動', shortName: '坐骨神經滑動', regions: ['spine', 'hip'],
+    summary: '坐姿讓膝與頸反向配合，使坐骨神經前後滑動。',
+    steps: ['坐在椅子前半部，雙腳踩地，背部自然直立。', '一側膝蓋慢慢伸直、腳尖勾起時，頭往後仰一點。', '膝蓋彎回時，頭低下；緩慢來回。'],
+    keyCue: '不要停在最末端；腿麻加重或延伸更遠就停止。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每天 2 次' },
+  },
+  {
+    id: 'lumbar-rotation-stretch', code: 't12', name: '仰躺腰部旋轉', shortName: '腰部旋轉', image: '/exercises/knee-to-chest.png', regions: ['spine'],
+    summary: '仰躺屈膝並雙膝倒向一側，溫和放鬆腰背。',
+    steps: ['仰躺屈膝，雙腳併攏踩穩，雙手張開放床面。', '雙膝一起慢慢倒向一側，肩膀保持貼床。', '到輕微緊繃處停留數秒，回正後換邊。'],
+    keyCue: '不要用力扭；腿麻加重就縮小角度。', dose: { type: 'reps', reps: 6, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'flexion-in-sitting', code: 't13', name: '坐姿前彎', shortName: '坐姿前彎', regions: ['spine'],
+    summary: '坐姿慢慢往前彎，替腰椎神經通道製造空間。',
+    steps: ['坐在穩固椅子上，雙腳打開踩穩。', '身體慢慢往前彎，雙手沿小腿往下滑。', '到舒適位置停留數秒，再用手推大腿慢慢起身。'],
+    keyCue: '起身要慢；有骨質疏鬆或壓迫性骨折病史者不要做。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每天 2 次' },
+  },
+  {
+    id: 'hip-hinge', code: 't14', name: '髖絞鏈練習', shortName: '髖絞鏈', regions: ['spine', 'hip'],
+    summary: '學會用髖部彎腰，保護腰椎並用在日常搬取物品。',
+    steps: ['雙腳與肩同寬站立，膝蓋微彎，一支棍子沿背部貼住後腦、上背與尾骨。', '臀部往後推，身體前傾，保持棍子三點都貼著。', '感到大腿後側緊繃後，用臀部發力回到站直。'],
+    keyCue: '不是蹲下，是臀部往後；棍子離開背部代表腰彎了。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'thoracic-extension-chair', code: 't15', name: '坐姿胸椎伸展', shortName: '胸椎伸展', regions: ['spine', 'neck', 'shoulder'],
+    summary: '以椅背為支點，讓上背往後延展。',
+    steps: ['坐在有硬椅背的椅子上，雙手輕扶後腦，手肘朝前。', '讓上背靠在椅背上緣，胸口慢慢往上打開。', '停留約 5 秒，再回到直立。'],
+    keyCue: '動作發生在上背不是腰；不要用手把頭往後扳。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'thoracic-rotation', code: 't16', name: '側躺開書式旋轉', shortName: '開書旋轉', regions: ['spine', 'neck'],
+    summary: '側躺屈膝，上方手臂往後打開，增加胸椎旋轉。',
+    steps: ['側躺，雙膝彎曲併攏在身體前方，雙手往前伸直併攏。', '上方手臂沿地面畫弧往後打開，眼睛跟著手走。', '到舒適範圍停留數秒，再慢慢回來；做完換邊。'],
+    keyCue: '膝蓋保持併攏在原位；肩膀痛就縮小範圍。', dose: { type: 'reps', reps: 6, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'wall-posture-drill', code: 't17', name: '靠牆姿勢練習', shortName: '靠牆姿勢', regions: ['spine', 'neck'],
+    summary: '靠牆站立找出直立姿勢，並練習維持。',
+    steps: ['背靠牆站立，腳跟離牆約一個拳頭，臀部與上背貼牆。', '下巴微收，讓後腦盡量靠近牆面（不必勉強貼到）。', '維持正常呼吸約 30 秒，再離開牆面走幾步保持同樣感覺。'],
+    keyCue: '不要用力挺胸或憋氣；有駝背者後腦貼不到牆是正常的。', dose: { type: 'reps', reps: 5, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'chest-expansion', code: 't18', name: '胸廓擴張運動', shortName: '胸廓擴張', regions: ['spine'],
+    summary: '雙手放肋骨兩側，練習把氣吸進胸廓側邊。',
+    steps: ['坐直，雙手掌心貼在肋骨下緣兩側。', '用鼻子深吸氣，感覺肋骨往兩側把手推開。', '嘴巴慢慢吐氣讓肋骨回收；重複並保持節奏。'],
+    keyCue: '不要聳肩吸氣；頭暈就休息一下。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'prone-back-extension', code: 't19', name: '俯臥背部伸肌訓練', shortName: '背肌訓練', regions: ['spine'],
+    summary: '趴著把頭與上胸輕輕抬離床面，訓練背部伸肌。',
+    steps: ['趴在床上，額頭墊毛巾，雙手放在身體兩側。', '肩胛骨輕輕後收，把頭與上胸抬離床面一點點。', '停約 3 秒，再慢慢放下。'],
+    keyCue: '幅度很小就足夠；不要用力仰頭或憋氣。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每週 3 次' },
+  },
+
+  // ── 髖與骨盆 ────────────────────────────────────────────────
+  {
+    id: 'heel-slide', code: 'h01', name: '仰躺腳跟滑動', shortName: '腳跟滑動', image: '/exercises/heel-slide.png', regions: ['hip', 'knee'],
+    summary: '腳跟沿床面滑動，溫和活動髖膝。',
+    steps: ['仰躺，雙腿伸直或舒適放鬆。', '一側腳跟沿床面慢慢滑向臀部。', '到舒適彎曲角度後，再慢慢滑回。'],
+    keyCue: '腳跟不要抬離床面；不需要硬壓角度。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'sit-to-stand', code: 'h02', name: '坐到站', shortName: '坐到站', image: '/exercises/sit-to-stand.png', regions: ['hip', 'knee', 'spine'],
+    summary: '從穩固椅子平穩站起，再控制坐下。',
+    steps: ['坐在穩固椅子前半部，雙腳踩穩。', '身體微微前傾，雙腳出力站起。', '站穩後，臀部往後並慢慢坐下。'],
+    keyCue: '膝蓋朝腳尖方向；需要時可用扶手協助。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每週 3 次' },
+  },
+  {
+    id: 'hip-abduction-isometric', code: 'h03', name: '仰躺髖外展等長', shortName: '髖外展等長', image: '/exercises/hip-abduction-isometric.png', regions: ['hip', 'knee'],
+    summary: '仰躺屈膝，以帶子限制動作，溫和啟動髖外側肌群。',
+    steps: ['仰躺屈膝、雙腳踩穩，在雙膝外套一條不易滑動的帶子。', '雙膝同時輕輕往外推，帶子限制膝蓋不要明顯移動。', '維持約 10 秒並正常呼吸，再完全放鬆。'],
+    keyCue: '雙腳保持踩地；只用可接受的力量，不要夾腿或憋氣。', dose: { type: 'reps', reps: 5, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'standing-hip-abduction', code: 'h04', name: '站姿髖外展', shortName: '髖外展', image: '/exercises/hip-abduction.png', regions: ['hip', 'knee', 'foot-ankle'],
+    summary: '扶穩後將腿向外移，訓練髖外側肌群。',
+    steps: ['站在穩固桌邊，單手輕扶。', '身體保持直立，一側腿慢慢向外移。', '腳尖朝前，停一下後控制回來。'],
+    keyCue: '骨盆不要側傾；幅度小也可以。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每週 3 次' },
+  },
+  {
+    id: 'side-lying-abduction', code: 'h05', name: '側躺髖外展', shortName: '側躺外展', image: '/exercises/hip-abduction.png', regions: ['hip', 'knee'],
+    summary: '側躺把上方腿往上抬，訓練臀部外側。',
+    steps: ['側躺，下方腿彎曲、上方腿伸直，身體成一直線。', '腳尖朝前，上方腿慢慢往上抬起一個腳掌高。', '停一下，再用約 3 秒控制放下。'],
+    keyCue: '骨盆不要往後翻；腿不要往前擺。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每週 3 次' },
+  },
+  {
+    id: 'clam-shell', code: 'h06', name: '蚌殼式', shortName: '蚌殼式', image: '/exercises/hip-abduction.png', regions: ['hip', 'knee', 'spine'],
+    summary: '側躺屈膝，膝蓋像蚌殼一樣往上打開。',
+    steps: ['側躺屈膝約 45 度，雙腳跟併攏，身體成一直線。', '腳跟保持相貼，上方膝蓋慢慢往上打開。', '停一下，再慢慢併回。'],
+    keyCue: '骨盆不要往後倒；範圍小但穩定即可。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每週 3 次' },
+  },
+  {
+    id: 'glute-set', code: 'h07', name: '臀肌等長收縮', shortName: '臀肌收縮', image: '/exercises/bridge.png', regions: ['hip', 'spine', 'knee'],
+    summary: '躺著或坐著收緊臀部肌肉，再完全放鬆。',
+    steps: ['仰躺或坐好，雙腿放鬆。', '兩側臀部同時收緊，像夾住一張紙。', '維持約 5 秒後完全放鬆。'],
+    keyCue: '不要憋氣，也不要拱腰。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'hip-flexor-stretch', code: 'h08', name: '髖屈肌伸展', shortName: '髖前側伸展', regions: ['hip', 'spine'],
+    summary: '單膝跪姿把骨盆往前帶，拉開大腿前側與髖前方。',
+    steps: ['單膝跪在軟墊上，另一腳在前踩穩，扶著椅子保持平衡。', '收緊臀部，骨盆慢慢往前推，上半身保持直立。', '感到後腿髖前方拉伸後停留約 20 秒，再換邊。'],
+    keyCue: '腰不要往後拱；膝蓋不舒服就多墊一層毛巾。', dose: { type: 'reps', reps: 3, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'hip-extension-standing', code: 'h09', name: '站姿髖後伸', shortName: '髖後伸', regions: ['hip'],
+    summary: '扶穩後把腿往後帶，訓練臀部後側。',
+    steps: ['面對桌子站立，雙手輕扶穩固桌面。', '身體保持直立，一側腿伸直往後帶。', '停一下，再慢慢回到起始位置。'],
+    keyCue: '腰不要往前拱；用臀部發力而不是甩腿。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每週 3 次' },
+  },
+  {
+    id: 'hip-rotation-rom', code: 'h10', name: '髖關節旋轉活動', shortName: '髖旋轉', image: '/exercises/heel-slide.png', regions: ['hip'],
+    summary: '仰躺屈膝，讓大腿在舒適範圍內內外旋轉。',
+    steps: ['仰躺屈膝，雙腳踩穩並與髖同寬。', '一側膝蓋慢慢往外倒到舒適範圍，停一下。', '再慢慢往內倒，回正後換邊。'],
+    keyCue: '出現鼠蹊部夾痛就縮小範圍。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'adductor-isometric', code: 'h11', name: '內收肌等長收縮', shortName: '夾球等長', image: '/exercises/hip-abduction-isometric.png', regions: ['hip', 'spine'],
+    summary: '雙膝之間夾住軟球或枕頭，出力但不移動。',
+    steps: ['仰躺屈膝，雙腳踩穩，膝蓋間夾一顆軟球或枕頭。', '雙膝慢慢往內夾到中等力量。', '維持約 10 秒並正常呼吸，再完全放鬆。'],
+    keyCue: '從很輕的力量開始；鼠蹊部尖銳痛就減力。', dose: { type: 'reps', reps: 6, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'adductor-progression', code: 'h12', name: '內收肌漸進訓練', shortName: '內收肌訓練', regions: ['hip'],
+    summary: '側躺把下方腿往上抬，訓練大腿內側。',
+    steps: ['側躺，上方腿彎曲跨到身體前方並用枕頭墊好。', '下方腿伸直、腳尖朝前，慢慢往上抬離床面。', '停一下，再用約 3 秒控制放下。'],
+    keyCue: '幅度小即可；隔天鼠蹊部明顯更痛就減量。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每週 3 次' },
+  },
+  {
+    id: 'hamstring-isometric', code: 'h13', name: '腿後肌等長收縮', shortName: '腿後等長', regions: ['hip', 'knee'],
+    summary: '腳跟往下壓地面或牆面，出力但腿不移動。',
+    steps: ['仰躺屈膝約 45 度，雙腳跟踩在地面或床面上。', '腳跟往下壓並輕輕往身體方向勾，感覺大腿後側收緊。', '維持約 10 秒並正常呼吸，再完全放鬆。'],
+    keyCue: '中等力量即可；坐骨部位尖銳痛就減力。', dose: { type: 'reps', reps: 6, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'long-lever-bridge', code: 'h14', name: '長槓桿橋式', shortName: '長槓桿橋式', image: '/exercises/bridge.png', regions: ['hip', 'knee'],
+    summary: '腳跟放遠一點做橋式，增加大腿後側的負荷。',
+    steps: ['仰躺，腳跟踩在遠一點的位置，膝蓋只彎約 20 度。', '收緊臀部與大腿後側，把骨盆抬離床面。', '停一下，再控制放下。'],
+    keyCue: '感覺應在大腿後側；抽筋就縮短停留時間。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每週 3 次' },
+  },
+  {
+    id: 'hip-hinge-load', code: 'h15', name: '負重髖絞鏈', shortName: '負重髖絞鏈', regions: ['hip', 'spine'],
+    summary: '手持輕重量做髖絞鏈，漸進增加大腿後側負荷。',
+    steps: ['雙腳與髖同寬站立，雙手握住輕重量（如水瓶）放在大腿前。', '膝蓋微彎，臀部往後推，重量沿大腿往下滑。', '感到大腿後側緊繃後，用臀部發力回到站直。'],
+    keyCue: '背保持平直；疼痛可接受但隔天不應明顯加重。', dose: { type: 'reps', reps: 8, sets: 3, frequency: '每週 3 次' },
+  },
+  {
+    id: 'piriformis-stretch', code: 'h16', name: '臀部深層伸展', shortName: '臀深層伸展', image: '/exercises/knee-to-chest.png', regions: ['hip'],
+    summary: '仰躺翹腳成 4 字，把大腿往胸口帶。',
+    steps: ['仰躺屈膝，把患側腳踝跨到對側大腿上成 4 字。', '雙手抱住下方大腿，慢慢往胸口帶。', '感到臀部深處拉伸後停留約 20 秒，再換邊。'],
+    keyCue: '出現腿麻加重就停止；不要硬壓膝蓋。', dose: { type: 'reps', reps: 3, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'seated-marching', code: 'h17', name: '坐姿抬腿', shortName: '坐姿抬腿', image: '/exercises/sit-to-stand.png', regions: ['hip', 'knee'],
+    summary: '坐著輪流把膝蓋抬起，安全地訓練髖屈肌。',
+    steps: ['坐在穩固椅子上，雙腳踩穩，背部靠好。', '一側膝蓋慢慢抬離椅面約一個拳頭高。', '停一下，慢慢放下後換邊。'],
+    keyCue: '身體不要往後倒；不要憋氣。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'standing-hip-flexion', code: 'h18', name: '站姿抬膝', shortName: '站姿抬膝', regions: ['hip'],
+    summary: '扶穩後把膝蓋抬到腰部高度，練習站立平衡與髖屈。',
+    steps: ['站在穩固桌邊，單手輕扶。', '身體保持直立，一側膝蓋慢慢抬到舒適高度。', '停一下，再慢慢放下；換邊重複。'],
+    keyCue: '不要駝背或側傾；髖前夾痛就降低高度。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 1 次' },
+  },
+
+  // ── 膝 ──────────────────────────────────────────────────────
+  {
+    id: 'quad-set', code: 'k01', name: '股四頭肌等長收縮', shortName: '大腿前側收縮', image: '/exercises/quad-set.png', regions: ['knee', 'hip'],
+    summary: '膝蓋伸直，收緊大腿前側肌肉。',
+    steps: ['坐或躺好，患側腿伸直並放鬆。', '腳尖朝上，收緊大腿前側，讓膝後靠近床面。', '維持數秒後完全放鬆。'],
+    keyCue: '膝蓋本身不要用力往下壓到疼痛。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'step-up', code: 'k02', name: '低階踏步', shortName: '低階踏步', image: '/exercises/step-up.png', regions: ['knee', 'hip', 'foot-ankle'],
+    summary: '踏上低台階，訓練髖膝與小腿的功能力量。',
+    steps: ['面對低而穩固的台階，旁邊有扶手。', '一腳踩上台階，身體向上站穩。', '控制速度慢慢退回地面，再重複。'],
+    keyCue: '膝蓋對準腳尖；先從很低的高度開始。', dose: { type: 'reps', reps: 6, sets: 2, frequency: '每週 3 次' },
+  },
+  {
+    id: 'straight-leg-raise', code: 'k03', name: '直膝抬腿', shortName: '直膝抬腿', image: '/exercises/quad-set.png', regions: ['knee', 'hip'],
+    summary: '維持膝蓋伸直，把整條腿抬離床面。',
+    steps: ['仰躺，患側腿伸直，另一腳屈膝踩穩。', '先收緊大腿前側讓膝蓋完全伸直。', '維持膝直，把腿抬高約 30 公分，停一下再慢慢放下。'],
+    keyCue: '膝蓋一彎就先回到收縮練習；腰不要拱起。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'terminal-knee-extension', code: 'k04', name: '末端伸膝訓練', shortName: '末端伸膝', image: '/exercises/quad-set.png', regions: ['knee'],
+    summary: '膝下墊毛巾捲，練習把膝蓋最後一段伸直。',
+    steps: ['仰躺或長坐，膝蓋下方墊一個毛巾捲。', '腳跟抬離床面，把膝蓋往下壓向毛巾捲並完全伸直。', '停約 5 秒，再慢慢放下。'],
+    keyCue: '重點是最後 20 度；不要用力甩腿。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'knee-flexion-rom', code: 'k05', name: '坐姿膝彎曲活動', shortName: '膝彎曲活動', image: '/exercises/sit-to-stand.png', regions: ['knee'],
+    summary: '坐姿讓小腿往後滑，逐步找回膝蓋彎曲角度。',
+    steps: ['坐在穩固椅子上，雙腳踩地。', '患側腳跟慢慢往椅子下方滑，膝蓋逐漸彎曲。', '到輕微緊繃處停留約 10 秒，再滑回。'],
+    keyCue: '可用健側腳輕輕協助；不要壓到尖銳痛。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 2 次' },
+  },
+  {
+    id: 'wall-sit-isometric', code: 'k06', name: '靠牆靜蹲', shortName: '靠牆靜蹲', regions: ['knee'],
+    summary: '背靠牆微蹲並維持不動，是膝前疼痛常用的等長負荷。',
+    steps: ['背靠牆站立，雙腳往前踩約一步，與肩同寬。', '沿牆面慢慢下滑到膝蓋彎曲約 30–60 度。', '維持約 30 秒並正常呼吸，再沿牆站起。'],
+    keyCue: '膝蓋不要超過腳尖太多；痛到 5 分以上就減少角度或時間。', dose: { type: 'reps', reps: 4, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'mini-squat', code: 'k07', name: '扶穩迷你蹲', shortName: '迷你蹲', regions: ['knee', 'hip'],
+    summary: '扶穩後做小範圍的蹲下站起，訓練下肢功能力量。',
+    steps: ['雙腳與肩同寬站立，雙手輕扶穩固桌面。', '臀部往後坐，膝蓋彎曲約 30–45 度。', '停一下，再用大腿與臀部發力站直。'],
+    keyCue: '膝蓋對準第二腳趾；腳跟不要離地。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每週 3 次' },
+  },
+  {
+    id: 'lateral-step-down', code: 'k08', name: '側向下階控制', shortName: '側向下階', image: '/exercises/step-up.png', regions: ['knee', 'hip'],
+    summary: '單腳站在台階上，控制另一腳慢慢碰地。',
+    steps: ['單腳站在低台階上，旁邊扶穩，另一腳懸空在台階旁。', '用站立腳慢慢彎曲，讓懸空腳的腳跟輕碰地面。', '不要把重量交出去，再用站立腳把身體推回。'],
+    keyCue: '膝蓋不要往內倒；台階從最低開始。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每週 3 次' },
+  },
+  {
+    id: 'single-leg-bridge', code: 'k09', name: '單腳橋式', shortName: '單腳橋式', image: '/exercises/bridge.png', regions: ['knee', 'hip'],
+    summary: '單腳支撐做橋式，增加臀部與大腿後側負荷。',
+    steps: ['仰躺屈膝，雙腳踩穩，把一腳抬離床面。', '用支撐腳把骨盆抬起，身體成一直線。', '停一下，再控制放下；做完換邊。'],
+    keyCue: '骨盆不要一高一低；抽筋就先回到雙腳橋式。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每週 3 次' },
+  },
+  {
+    id: 'hamstring-stretch', code: 'k10', name: '腿後肌伸展', shortName: '腿後伸展', regions: ['knee', 'hip'],
+    summary: '腳跟放在低矮處，身體從髖部前傾伸展大腿後側。',
+    steps: ['站直，把患側腳跟放在低矮穩固的台階上，腳尖朝上。', '背保持平直，從髖部慢慢往前傾。', '感到大腿後側拉伸後停留約 20 秒，再回正。'],
+    keyCue: '不要駝背去搆腳尖；腿麻就停止。', dose: { type: 'reps', reps: 3, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'quad-stretch', code: 'k11', name: '大腿前側伸展', shortName: '大腿前側伸展', regions: ['knee', 'hip'],
+    summary: '扶穩後把腳跟帶向臀部，伸展大腿前側。',
+    steps: ['站在穩固桌邊，單手輕扶。', '同側手抓住腳踝，把腳跟慢慢帶向臀部。', '膝蓋朝下、臀部收緊，停留約 20 秒後換邊。'],
+    keyCue: '腰不要往前拱；膝蓋痛就改趴姿用毛巾輔助。', dose: { type: 'reps', reps: 3, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'knee-extension-prop', code: 'k12', name: '膝伸直擺位', shortName: '膝伸直擺位', image: '/exercises/quad-set.png', regions: ['knee'],
+    summary: '腳跟墊高讓膝蓋自然伸直，改善無法完全伸直的情況。',
+    steps: ['坐或躺好，只在腳跟下墊一個毛巾捲，膝蓋懸空。', '大腿完全放鬆，讓膝蓋在重力下慢慢往下沉。', '維持 5–10 分鐘後收起。'],
+    keyCue: '膝蓋下方不要墊東西；出現麻木就縮短時間。', dose: { type: 'duration', minutes: 8, frequency: '每天 2 次' },
+  },
+
+  // ── 足踝與小腿 ──────────────────────────────────────────────
+  {
+    id: 'ankle-pumps', code: 'f01', name: '踝關節上下活動', shortName: '腳踝上下動', image: '/exercises/ankle-mobility.png', regions: ['foot-ankle', 'knee', 'hip'],
+    summary: '在舒適範圍內勾腳與踩腳，恢復踝部活動。',
+    steps: ['坐好或躺好，腳踝放鬆。', '腳尖慢慢往自己方向勾起。', '再慢慢往下踩，到舒適範圍即可。'],
+    keyCue: '不要快速畫大圈；腫痛明顯增加就減量。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 2 次' },
+  },
+  {
+    id: 'weight-shift', code: 'f02', name: '扶穩重心轉移', shortName: '重心轉移', image: '/exercises/ankle-mobility.png', regions: ['foot-ankle', 'knee', 'hip'],
+    summary: '扶著桌面，將重量逐步移到患側腳。',
+    steps: ['雙腳站立，雙手扶穩桌面。', '身體保持直立，重心慢慢移向患側。', '維持舒適承重後，再移回中間。'],
+    keyCue: '先確保安全；可承重多少就做多少。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'single-leg-balance', code: 'f03', name: '扶穩單腳平衡', shortName: '單腳平衡', image: '/exercises/single-leg-balance.png', regions: ['foot-ankle', 'knee', 'hip'],
+    summary: '在可隨時扶住的環境練習單腳站立。',
+    steps: ['站在穩固桌邊，手指輕扶桌面。', '將另一腳抬離地面，患側腳保持站穩。', '維持後放下；熟練再減少手部支撐。'],
+    keyCue: '旁邊不要有雜物；不閉眼、不站軟墊。', dose: { type: 'reps', reps: 5, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'tandem-stance', code: 'f04', name: '前後腳站立', shortName: '前後腳站', image: '/exercises/single-leg-balance.png', regions: ['foot-ankle', 'knee', 'hip', 'spine'],
+    summary: '兩腳前後成一直線站立，是單腳平衡前的安全過渡。',
+    steps: ['站在穩固桌邊，手指輕扶桌面。', '一腳往前踩，腳跟對準後腳腳尖成一直線。', '維持約 20 秒，再換腳在前。'],
+    keyCue: '不閉眼；站不穩就把腳稍微分開一點。', dose: { type: 'reps', reps: 4, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'plantar-fascia-stretch', code: 'f05', name: '足底筋膜特定伸展', shortName: '足底伸展', image: '/exercises/plantar-stretch.png', regions: ['foot-ankle'],
+    summary: '坐姿將大腳趾往上拉，伸展足底筋膜。',
+    steps: ['坐好，將患側腳踝放到另一側大腿上。', '一手抓住腳趾，將腳趾往小腿方向拉。', '感到足弓繃緊後停留，再放鬆。'],
+    keyCue: '可在下床第一步前先做；不要拉到尖銳痛。', dose: { type: 'reps', reps: 5, sets: 2, frequency: '每天 2 次' },
+  },
+  {
+    id: 'calf-stretch', code: 'f06', name: '靠牆小腿伸展', shortName: '小腿伸展', image: '/exercises/calf-stretch.png', regions: ['foot-ankle', 'knee'],
+    summary: '後腳跟踩地，溫和伸展小腿後側。',
+    steps: ['面對牆站立，雙手扶牆，患側腳在後。', '後腳跟踩地、腳尖朝前，前膝慢慢彎曲。', '感到小腿拉伸後停留，再放鬆。'],
+    keyCue: '後腳跟不要浮起；不需要用力壓到底。', dose: { type: 'reps', reps: 5, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'soleus-stretch', code: 'f07', name: '屈膝小腿伸展', shortName: '屈膝小腿伸展', image: '/exercises/calf-stretch.png', regions: ['foot-ankle'],
+    summary: '後腳膝蓋微彎做小腿伸展，針對比目魚肌。',
+    steps: ['面對牆站立，雙手扶牆，患側腳在後。', '後腳跟踩地，這次把後腳膝蓋也微微彎曲。', '感到接近腳跟處拉伸後停留，再放鬆。'],
+    keyCue: '後腳跟全程踩地；伸展感應該較低、靠近跟腱。', dose: { type: 'reps', reps: 5, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'seated-calf-raise', code: 'f08', name: '坐姿提踵', shortName: '坐姿提踵', image: '/exercises/calf-loading.png', regions: ['foot-ankle'],
+    summary: '坐姿將腳跟抬起，從較低負荷開始訓練小腿。',
+    steps: ['坐在椅子上，雙腳踩地、膝蓋彎曲。', '前腳掌保持踩地，慢慢抬高腳跟。', '停一下，再慢慢將腳跟放回。'],
+    keyCue: '速度要慢；可接受輕微症狀，但不要突然劇痛。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每週 3 次' },
+  },
+  {
+    id: 'calf-raise-isometric', code: 'f09', name: '扶穩提踵等長', shortName: '提踵等長', image: '/exercises/calf-loading.png', regions: ['foot-ankle'],
+    summary: '扶穩後踮起腳跟，在可接受高度停住不動。',
+    steps: ['雙腳與髖同寬站立，雙手扶穩桌面。', '慢慢踮起腳尖，到可接受高度後停住約 10 秒。', '保持呼吸，再慢慢將腳跟放回地面。'],
+    keyCue: '先用雙腳平均承重；若隔天疼痛或腫脹明顯增加就減量。', dose: { type: 'reps', reps: 5, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'calf-raise', code: 'f10', name: '扶穩雙腳提踵', shortName: '雙腳提踵', image: '/exercises/calf-loading.png', regions: ['foot-ankle', 'knee'],
+    summary: '扶穩後抬高腳跟，訓練小腿與跟腱負荷能力。',
+    steps: ['雙腳與髖同寬站立，雙手扶穩。', '慢慢踮起腳尖，讓腳跟離地。', '停一下，再用至少 3 秒慢慢放下。'],
+    keyCue: '重量平均；疼痛或腫脹隔天明顯增加就減量。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每週 3 次' },
+  },
+  {
+    id: 'bent-knee-calf-raise', code: 'f11', name: '微屈膝提踵', shortName: '屈膝提踵', image: '/exercises/calf-loading.png', regions: ['foot-ankle'],
+    summary: '膝蓋微彎保持不動，再做緩慢提踵。',
+    steps: ['雙手扶穩，雙腳站立，膝蓋微微彎曲。', '維持膝蓋角度，慢慢將腳跟抬高。', '停一下，再用至少 3 秒慢慢放下。'],
+    keyCue: '膝蓋不要內夾；先雙腳，耐受後才考慮單腳。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每週 3 次' },
+  },
+  {
+    id: 'ankle-eversion-band', code: 'f12', name: '彈力帶踝外翻', shortName: '踝外翻訓練', regions: ['foot-ankle'],
+    summary: '用彈力帶做腳掌往外的阻力訓練，強化腓骨肌群。',
+    steps: ['長坐，彈力帶一端固定在對側，另一端套住前腳掌。', '腳跟不動，腳掌慢慢往外翻對抗彈力帶。', '停一下，再用約 3 秒控制回來。'],
+    keyCue: '動作在腳踝不是整條腿；阻力從最輕開始。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每週 3 次' },
+  },
+  {
+    id: 'ankle-inversion-band', code: 'f13', name: '彈力帶踝內翻', shortName: '踝內翻訓練', regions: ['foot-ankle'],
+    summary: '用彈力帶做腳掌往內的阻力訓練，強化脛後肌。',
+    steps: ['長坐，彈力帶一端固定在同側外方，另一端套住前腳掌。', '腳跟不動，腳掌慢慢往內翻並微微往下踩。', '停一下，再用約 3 秒控制回來。'],
+    keyCue: '髖部不要跟著轉；內踝後方尖銳痛就減量。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每週 3 次' },
+  },
+  {
+    id: 'heel-raise-inversion', code: 'f14', name: '內翻提踵', shortName: '內翻提踵', image: '/exercises/calf-loading.png', regions: ['foot-ankle'],
+    summary: '腳跟略往內轉再提踵，較能訓練到脛後肌。',
+    steps: ['雙腳與髖同寬站立，雙手扶穩，兩腳間夾一顆小球。', '維持夾球，慢慢踮起腳跟。', '停一下，再用至少 3 秒慢慢放下。'],
+    keyCue: '腳跟保持朝內；做不到單腳就維持雙腳。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每週 3 次' },
+  },
+  {
+    id: 'short-foot', code: 'f15', name: '足弓短縮訓練', shortName: '足弓訓練', regions: ['foot-ankle'],
+    summary: '不捲腳趾的情況下把足弓輕輕拱起，訓練足部小肌肉。',
+    steps: ['坐好，腳掌完全踩地，腳趾放鬆張開。', '想像把前腳掌往腳跟方向靠近，讓足弓微微拱起。', '維持約 5 秒並正常呼吸，再完全放鬆。'],
+    keyCue: '腳趾不要用力抓地或翹起；幅度很小是正常的。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'towel-curl', code: 'f16', name: '毛巾抓握', shortName: '毛巾抓握', regions: ['foot-ankle'],
+    summary: '用腳趾把毛巾往身體方向抓過來。',
+    steps: ['坐好，腳掌踩在一條攤平的毛巾上。', '腳跟不動，用腳趾把毛巾一點一點抓向自己。', '毛巾抓完後攤平重來。'],
+    keyCue: '腳抽筋就休息；前足疼痛加重時改做足弓短縮。', dose: { type: 'reps', reps: 8, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'toe-spread', code: 'f17', name: '腳趾張開控制', shortName: '腳趾張開', regions: ['foot-ankle'],
+    summary: '練習把腳趾張開與大腳趾下壓，改善前足受力。',
+    steps: ['坐好，腳掌完全踩地。', '腳趾盡量往兩側張開，維持約 3 秒。', '再練習只把大腳趾往下壓、其他腳趾維持放鬆。'],
+    keyCue: '一開始做不到是正常的；用手指幫忙分開也可以。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'big-toe-stretch', code: 'f18', name: '大腳趾活動伸展', shortName: '大腳趾伸展', image: '/exercises/plantar-stretch.png', regions: ['foot-ankle'],
+    summary: '用手輔助讓大腳趾往上翹，維持第一趾關節活動。',
+    steps: ['坐好，把患側腳踝放到另一側大腿上。', '一手固定前腳掌，另一手把大腳趾慢慢往上翹。', '到輕微緊繃處停留約 20 秒，再放鬆。'],
+    keyCue: '不要硬扳到尖銳痛；紅腫發熱時先不要做。', dose: { type: 'reps', reps: 5, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'ankle-dorsiflexion-lunge', code: 'f19', name: '弓步踝背屈活動', shortName: '踝背屈活動', image: '/exercises/calf-stretch.png', regions: ['foot-ankle'],
+    summary: '腳跟不離地，把膝蓋往前推過腳尖，增加踝背屈。',
+    steps: ['面對牆站立，患側腳在前，腳尖離牆約一個拳頭。', '腳跟保持踩地，膝蓋沿第二腳趾方向慢慢往前推向牆面。', '停一下，再回到起始位置。'],
+    keyCue: '腳跟一離地就停止；踝前方夾痛就縮短距離。', dose: { type: 'reps', reps: 10, sets: 2, frequency: '每天 1 次' },
+  },
+  {
+    id: 'ankle-alphabet', code: 'f20', name: '踝關節畫字', shortName: '踝關節畫字', image: '/exercises/ankle-mobility.png', regions: ['foot-ankle'],
+    summary: '用腳尖在空中慢慢寫字，做全方向的踝關節活動。',
+    steps: ['坐好，患側腿伸出，腳踝懸空。', '想像腳尖是一支筆，慢慢在空中寫注音或英文字母。', '寫完一輪後休息，再重複。'],
+    keyCue: '動作要慢；只在不痛的範圍內畫。', dose: { type: 'reps', reps: 5, sets: 2, frequency: '每天 2 次' },
+  },
+
+  // ── 一般活動 ────────────────────────────────────────────────
+  {
+    id: 'walking', code: 'g01', name: '舒適步行', shortName: '步行', image: '/exercises/walking.png', regions: ['spine', 'hip', 'knee', 'foot-ankle', 'neck'],
+    summary: '以可對話的速度步行，逐步恢復日常活動。',
+    steps: ['穿合腳的鞋，選擇平坦安全的路線；炎熱潮濕時改在室內。', '用自然步幅，以能正常說話的速度前進。', '可分段完成；隔天沒有明顯惡化再漸增。'],
+    keyCue: '天氣太熱就改在室內。若頭暈、噁心或身體異常發熱，立即停止、到陰涼處並找人幫忙。', dose: { type: 'duration', minutes: 10, frequency: '每週 5 次' },
+  },
+  {
+    id: 'stationary-cycling', code: 'g02', name: '固定式腳踏車', shortName: '固定腳踏車', regions: ['spine', 'hip', 'knee', 'foot-ankle'],
+    summary: '坐姿踩車，是走路會痛時常用的替代有氧方式。',
+    steps: ['調整座椅高度，讓踩到最低時膝蓋仍微彎。', '以輕阻力、能正常說話的速度開始踩。', '可分段完成；結束前放慢速度緩和。'],
+    keyCue: '身體不要過度前趴；膝痛加重就降低阻力或縮短時間。', dose: { type: 'duration', minutes: 10, frequency: '每週 5 次' },
+  },
+  {
+    id: 'chair-aerobic', code: 'g03', name: '坐姿有氧活動', shortName: '坐姿有氧', image: '/exercises/sit-to-stand.png', regions: ['spine', 'hip', 'knee', 'shoulder'],
+    summary: '坐在椅子上做連續的手腳律動，站立不便時仍能維持體能。',
+    steps: ['坐在穩固椅子上，背部靠好，雙腳踩穩。', '雙腳輪流原地踏步，同時雙手自然擺動。', '維持能正常說話的強度；可分段完成。'],
+    keyCue: '出現胸悶、喘不過氣或頭暈就立刻停止。', dose: { type: 'duration', minutes: 10, frequency: '每週 5 次' },
+  },
+]
+
+export const getExercise = (id: string) => exercises.find((exercise) => exercise.id === id)

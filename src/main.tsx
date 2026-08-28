@@ -3,6 +3,14 @@ import { createRoot } from 'react-dom/client'
 import App from './App'
 import './styles.css'
 
+if (import.meta.env.DEV) {
+  void import('./lib/validate').then(({ validateData }) => {
+    const problems = validateData()
+    if (problems.length) console.error(`資料檢查發現 ${problems.length} 個問題：\n- ${problems.join('\n- ')}`)
+    else console.info('資料檢查通過。')
+  })
+}
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />
