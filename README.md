@@ -4,7 +4,7 @@
 
 ## 目前範圍
 
-- **PE／DD 工作台**：頸、肩、肘、腕手、上背胸椎、下背薦髂、髖、膝、足踝，共 9 個區域。每區都有義診用 60–90 秒快速序列與 3–5 分鐘完整核心序列；每項測試附操作、陽性定義、陽性意義、Sn、Sp、證據來源與限制。
+- **PE／DD 工作台**：頸、肩、肘、腕手、上背胸椎、下背薦髂、髖、膝、足踝，共 9 個區域。每區都有義診用 60–90 秒快速序列與 3–5 分鐘完整核心序列、原創代表操作圖；每項測試附操作、陽性定義、陽性意義、Sn、Sp，以及可直接在卡片內閱讀的研究設計、樣本、結果與限制。
 - **適用範圍閘門**：PE 前先排除重大急性外傷、兒童／青少年、術後與原發神經疾病主導個案；範圍外不啟動 DD 排序。
 - **DD 支持度排序**：依醫師輸入的陽性／陰性結果即時整理支持與反對證據。它不是機率或診斷，沒有可靠準確度的測試只給極小權重。
 - **症狀導引**：選部位 → 紅旗篩檢 → 病史問答 → 理學檢查 → 收斂到一個診斷或一個轉介建議。
@@ -36,8 +36,9 @@ npm run build
 src/data/conditions/   依部位切分的診斷、衛教、生活建議、回診時機與臨床分型
 src/data/flows/        症狀導引的決策樹（upper：頸肩肘腕手；lower：脊椎髖膝足踝）
 src/data/exercises.ts  動作庫
-src/data/physical-exams.ts  九區域 PE、診斷目標、Sn／Sp 與來源
+src/data/physical-exams.ts  九區域 PE、診斷目標、Sn／Sp 與 26 份站內研究摘要
 src/components/PhysicalExam.tsx  快速／完整 PE 與 DD 支持度排序介面
+public/pe/  九張原創 PE 代表操作 WebP 圖像
 src/lib/prescription.ts  網址短碼的編解碼（含已凍結的舊版對照表）
 ```
 
@@ -50,4 +51,4 @@ src/lib/prescription.ts  網址短碼的編解碼（含已凍結的舊版對照�
 HTTP 請求送到伺服器；頁面另設定 `no-referrer`，且不載入第三方分析程式。
 
 症狀導引與 PE／DD 排序是鑑別提示與流程備忘，**不是經過驗證的診斷演算法**，也不輸出疾病機率。本工具協助醫師整理檢查與傳遞運動建議，
-不取代臨床評估與轉介判斷。運動處方依據見 [`docs/clinical-evidence.md`](docs/clinical-evidence.md)；PE 數值、來源與限制見 [`docs/pe-evidence.md`](docs/pe-evidence.md)。
+不取代臨床評估與轉介判斷。運動處方依據見 [`docs/clinical-evidence.md`](docs/clinical-evidence.md)；PE 數值、來源與限制見 [`docs/pe-evidence.md`](docs/pe-evidence.md)。站內中文研究重點是摘要轉述而非全文或逐字翻譯，原文連結保留供醫師核對。

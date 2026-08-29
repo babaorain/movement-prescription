@@ -21,6 +21,14 @@ export const peSources: Record<string, PeSource> = {
     url: 'https://pubmed.ncbi.nlm.nih.gov/39938056/',
     evidence: 'moderate',
     context: '疑似頸神經根病變成人；不同操作版本與參考標準仍有異質性。',
+    design: '系統性回顧與雙變量隨機效應統合分析',
+    sample: '8 項研究；以影像或電生理作參考標準。',
+    takeaways: [
+      'Spurling 合併敏感度 53%（95% CI 29–78），合併特異度 92%（88–96）。',
+      '較適合用陽性結果增加頸神經根病變支持度，不適合靠陰性單獨排除。',
+      '加入頸旋轉／伸展的操作版本，研究中的敏感度較高。',
+    ],
+    limitations: '測試版本、影像與電生理參考標準不同；合併結果不能視為所有門診族群的固定表現。',
   },
   cervical2026: {
     id: 'cervical2026',
@@ -28,6 +36,14 @@ export const peSources: Record<string, PeSource> = {
     url: 'https://pubmed.ncbi.nlm.nih.gov/41680685/',
     evidence: 'very-low',
     context: 'ULNT 與肩外展緩解測試；作者將整體證據確定性評為 very low。',
+    design: '系統性回顧與診斷準確度統合分析（QUADAS-2、GRADE）',
+    sample: '8 項研究、6 種理學測試；Spurling 有 5 項研究。',
+    takeaways: [
+      'Combined ULNTs：Sn 97%（88–99）、Sp 51%（40–62），陰性較有排除價值。',
+      'ULNT1：Sn 70%（60–79）、Sp 71%（63–79）。',
+      '肩外展緩解測試：Sn 49%（39–60）、Sp 76%（66–84）。',
+    ],
+    limitations: '研究數少、操作版本不同；作者明確指出所有測試結果僅適用於納入研究的族群與版本。',
   },
   cervicogenic2019: {
     id: 'cervicogenic2019',
@@ -35,6 +51,13 @@ export const peSources: Record<string, PeSource> = {
     url: 'https://pubmed.ncbi.nlm.nih.gov/30997838/',
     evidence: 'very-low',
     context: '頸因性頭痛；flexion-rotation test 的合併估計，證據品質很低。',
+    design: '頭痛診斷工具系統性回顧與統合分析',
+    sample: '31 篇納入研究；頸因性頭痛僅找到 cervical flexion-rotation test。',
+    takeaways: [
+      'Cervical flexion-rotation test 合併 Sn 83%（72–94）、Sp 82%（73–91）。',
+      '此測試協助辨認頸因性頭痛，不等於已排除偏頭痛或其他次發性頭痛。',
+    ],
+    limitations: '多數工具只有單一研究，偏倚風險嚴重；頸因性頭痛結果被降為極低確定性。',
   },
   shoulder2017: {
     id: 'shoulder2017',
@@ -42,6 +65,14 @@ export const peSources: Record<string, PeSource> = {
     url: 'https://pubmed.ncbi.nlm.nih.gov/28122541/',
     evidence: 'moderate',
     context: '二級照護肩痛族群；單一測試的診斷價值普遍有限。',
+    design: '肩部特殊測試系統性回顧與統合分析',
+    sample: '篩選 6,900 篇摘要，20 篇符合條件，11 篇可進入統合分析。',
+    takeaways: [
+      '全層旋轉肌袖撕裂的 supraspinatus test：Sn 74%、Sp 77%。',
+      'Hawkins：Sn 58%、Sp 67%；單項只能有限度支持 cuff-related／肩峰下疼痛。',
+      'SLAP compression-rotation：Sn 43%、Sp 89%；陽性比陰性有用。',
+    ],
+    limitations: '沒有任何單一肩部測試展現全面優勢；納入研究的病灶定義、參考標準與轉介族群不同。',
   },
   elbow2022: {
     id: 'elbow2022',
@@ -49,6 +80,13 @@ export const peSources: Record<string, PeSource> = {
     url: 'https://pubmed.ncbi.nlm.nih.gov/33814224/',
     evidence: 'low',
     context: '研究數少且偏倚風險高；Cozen 僅有敏感度，握力差異的數字為範圍。',
+    design: 'PRISMA-DTA 系統性回顧',
+    sample: '24 項研究、1,370 人；只有 2 項研究評估理學檢查，多數研究評估影像。',
+    takeaways: [
+      'Cozen test 報告 Sn 91%，但沒有足以穩定合併的特異度。',
+      '肘屈曲與伸直時握力差 5–10%：Sn 78–83%、Sp 80–90%。',
+    ],
+    limitations: '97% 研究為偏倚風險不明或偏高；檢查方式、設備、納入條件與參考標準異質。',
   },
   elbowUcl2018: {
     id: 'elbowUcl2018',
@@ -56,6 +94,13 @@ export const peSources: Record<string, PeSource> = {
     url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC5821063/',
     evidence: 'low',
     context: '主要來自運動員與小型研究；不可直接外推到一般義診族群。',
+    design: '肘關節不穩定的敘述性臨床回顧',
+    sample: '彙整解剖、生物力學與檢查法；moving valgus 數值源自小型原始研究。',
+    takeaways: [
+      'Moving valgus stress test 在原始研究報告 Sn 100%、Sp 75%。',
+      '典型陽性是在持續 valgus stress 下，肘由最大屈曲伸至 30°時，於 70–120°重現內側韌帶區疼痛。',
+    ],
+    limitations: '證據集中於投擲運動員與專科族群；回顧本身不是新的診斷準確度研究。',
   },
   hook2023: {
     id: 'hook2023',
@@ -63,6 +108,14 @@ export const peSources: Record<string, PeSource> = {
     url: 'https://pubmed.ncbi.nlm.nih.gov/37578400/',
     evidence: 'low',
     context: '以手術轉介族群、男性為主；對一般門診的外部效度有限。',
+    design: '前瞻性診斷準確度與檢查者間信度研究',
+    sample: '64 人接受進階影像；28 人進入手術準確度分析，平均 49 歲且全為男性。',
+    takeaways: [
+      '以術中所見為參考，Hook test Sn 96%、Sp 67%。',
+      '25 例雙檢查者的 Cohen κ 0.71，屬實質一致。',
+      '即使敏感度高，作者仍不建議把 Hook test 當成唯一診斷依據。',
+    ],
+    limitations: '樣本小、全男性且屬影像／手術選擇族群；對一般肘痛門診的外推性有限。',
   },
   cts2023: {
     id: 'cts2023',
@@ -70,6 +123,14 @@ export const peSources: Record<string, PeSource> = {
     url: 'https://pubmed.ncbi.nlm.nih.gov/37366626/',
     evidence: 'moderate',
     context: 'CTS 疑似族群；研究操作與參考標準有異質性。',
+    design: '誘發測試系統性回顧與隨機效應統合分析',
+    sample: '31 項研究、12 種誘發測試；Phalen 7 項研究共 604 人，Tinel 7 項共 748 人。',
+    takeaways: [
+      'Phalen：合併 Sn 57%（44–68）、Sp 67%（52–79）。',
+      'Tinel：合併 Sn 45%（34–57）、Sp 78%（60–89）。',
+      '作者建議合併感覺運動檢查、手部症狀圖與問卷，不靠單一誘發測試。',
+    ],
+    limitations: '11 項研究至少一個 QUADAS-2 項目為高偏倚風險，且各研究估計範圍很寬。',
   },
   ctsCompression2004: {
     id: 'ctsCompression2004',
@@ -77,6 +138,13 @@ export const peSources: Record<string, PeSource> = {
     url: 'https://pubmed.ncbi.nlm.nih.gov/15162113/',
     evidence: 'low',
     context: '較早期回顧；carpal compression 的合併資料有限。',
+    design: '腕隧道臨床診斷測試系統性回顧',
+    sample: '60 項研究；平均品質分數 6.6／12，僅 15 項達 8 分以上。',
+    takeaways: [
+      'Carpal compression 加權估計 Sn 64%、Sp 83%。',
+      '同一回顧的舊估計：Phalen 68%／73%，Tinel 50%／77%。',
+    ],
+    limitations: '搜尋截至 2003 年，研究品質普遍偏低；新版 CTS 回顧應優先用於 Phalen／Tinel。',
   },
   what2014: {
     id: 'what2014',
@@ -84,6 +152,13 @@ export const peSources: Record<string, PeSource> = {
     url: 'https://pubmed.ncbi.nlm.nih.gov/23340762/',
     evidence: 'low',
     context: '單一研究、手術或治療轉介族群；高敏感度伴隨低特異度。',
+    design: '前瞻性診斷研究，以超音波作比較標準',
+    sample: '100 位橈骨莖突側自發痛患者（88 女、12 男）。',
+    takeaways: [
+      'WHAT test：Sn 99%、Sp 29%、PPV 95%、NPV 67%。',
+      '高敏感度使陰性較有幫助；低特異度代表陽性不能單獨確診 de Quervain。',
+    ],
+    limitations: '病人先以典型症狀進入研究，疾病光譜與一般未篩選門診不同；結果尚缺獨立外部驗證。',
   },
   spineNeuro2017: {
     id: 'spineNeuro2017',
@@ -91,6 +166,14 @@ export const peSources: Record<string, PeSource> = {
     url: 'https://pubmed.ncbi.nlm.nih.gov/28231784/',
     evidence: 'low',
     context: '參考標準、受試族群與測試閾值不同；femoral stretch 信賴區間很寬。',
+    design: '腰薦神經根病變神經學檢查系統性回顧',
+    sample: '12 項診斷準確度研究，涵蓋感覺、肌力、反射與神經動力學測試。',
+    takeaways: [
+      '感覺測試約 Sn 61%、Sp 63%；肌力測試 Sn 13–61%。',
+      '反射測試多為低敏感、高特異（Sn 14–67%、Sp 60–93%）。',
+      'Femoral nerve stretch 報告 Sn 100%（40–100）、Sp 83%（52–98），但信賴區間很寬。',
+    ],
+    limitations: '研究稀少且對神經動力測試究竟反映根壓迫或神經敏感仍有爭議；不可把最佳點估計當成穩定值。',
   },
   slr1999: {
     id: 'slr1999',
@@ -98,6 +181,13 @@ export const peSources: Record<string, PeSource> = {
     url: 'https://pubmed.ncbi.nlm.nih.gov/10552236/',
     evidence: 'low',
     context: '多為外科選擇族群，可能高估準確度；數字不可視為一般門診固定值。',
+    design: '坐骨神經痛／椎間盤突出病史與理學檢查系統性回顧',
+    sample: '37 項研究，文獻年代 1965–1994。',
+    takeaways: [
+      'Straight-leg raise 合併 Sn 85%、Sp 52%，偏向敏感但不特異。',
+      'Crossed SLR 合併 Sn 30%、Sp 84%，偏向陽性增加支持度。',
+    ],
+    limitations: '多項選擇偏倚與方法缺陷，作者認為敏感度可能被高估、特異度可能被低估。',
   },
   sij2009: {
     id: 'sij2009',
@@ -105,6 +195,14 @@ export const peSources: Record<string, PeSource> = {
     url: 'https://pubmed.ncbi.nlm.nih.gov/19119403/',
     evidence: 'low',
     context: '3 個以上 provocation test 陽性；需搭配排除腰椎來源。',
+    design: 'SIJ 診斷與治療的證據回顧',
+    sample: '整合以介入性參考標準評估 SIJ pain provocation tests 的既有研究。',
+    takeaways: [
+      '3 個以上 provocation tests 陽性：Sn 91%、Sp 78%。',
+      '若症狀無法 centralize，舊資料中的特異度可提高到 87%。',
+      '定位／活動度類 SIJ dysfunction tests 的信度與效度較差。',
+    ],
+    limitations: '屬較早期回顧；新統合分析顯示陽性 cluster 的 rule-in 能力比舊估計弱。',
   },
   sij2021: {
     id: 'sij2021',
@@ -112,6 +210,14 @@ export const peSources: Record<string, PeSource> = {
     url: 'https://pubmed.ncbi.nlm.nih.gov/34210160/',
     evidence: 'very-low',
     context: '新版分析認為陽性 cluster 的 rule-in 能力有限，整體確定性很低。',
+    design: 'SIJ pain provocation clusters 診斷準確度系統性回顧與雙變量統合分析',
+    sample: '搜尋 2,195 筆紀錄，納入 5 項研究。',
+    takeaways: [
+      '合併 LR+ 2.13（1.2–3.9）、LR− 0.33（0.11–0.72）。',
+      '以 20% pre-test probability 示範：陽性後約 35%，陰性後約 8%。',
+      '陰性 cluster 較能降低 SIJ pain 可能，陽性不足以單獨 rule in。',
+    ],
+    limitations: 'GRADE 為極低確定性，且 post-test probability 會隨實際 pre-test probability 改變。',
   },
   kemp2014: {
     id: 'kemp2014',
@@ -119,6 +225,13 @@ export const peSources: Record<string, PeSource> = {
     url: 'https://pubmed.ncbi.nlm.nih.gov/25202153/',
     evidence: 'very-low',
     context: '現有研究不支持把此測試單獨當作 facet pain 診斷工具。',
+    design: 'Kemp test 診斷 facet joint pain 的系統性回顧',
+    sample: '5 項研究符合條件。',
+    takeaways: [
+      '可合併研究中，只有陰性預測值超過 50%（約 56.8–59.9%）。',
+      '作者結論為診斷準確度差，不支持單獨用來診斷 facet pain。',
+    ],
+    limitations: '研究少、方法不一致；陰性預測值又高度依賴盛行率，不能直接跨場域套用。',
   },
   hipOa2019: {
     id: 'hipOa2019',
@@ -126,6 +239,14 @@ export const peSources: Record<string, PeSource> = {
     url: 'https://pubmed.ncbi.nlm.nih.gov/31846019/',
     evidence: 'moderate',
     context: '以放射影像 OA 為參考；影像 OA 不等同症狀來源。',
+    design: 'Rational Clinical Examination 系統性回顧',
+    sample: '6 項研究、1,110 人／1,324 髖；509 髖有放射影像 OA。',
+    takeaways: [
+      '被動 hip adduction 受限：Sn 80%、Sp 81%、LR+ 4.2。',
+      '被動 hip internal rotation 受限：Sn 66%、Sp 79%、LR+ 3.2。',
+      'Squat 引發後髖痛：Sn 24%、Sp 96%、LR+ 6.1；陽性較有用，陰性不能排除。',
+    ],
+    limitations: '參考標準是 X 光 OA，不等同症狀一定來自 OA；個別結果仍須配合疼痛位置與其他 ROM。',
   },
   hipIntra2025: {
     id: 'hipIntra2025',
@@ -133,6 +254,14 @@ export const peSources: Record<string, PeSource> = {
     url: 'https://pubmed.ncbi.nlm.nih.gov/40692936/',
     evidence: 'very-low',
     context: 'FADIR、FABER、IROP 的估計高度變異，不宜以單一測試確診。',
+    design: '前關節炎性髖關節內病變理學檢查系統性回顧',
+    sample: '15 項研究、1,378 髖；平均年齡範圍 16.0–60.2 歲。',
+    takeaways: [
+      '各測試 Sn／Sp 高度變異，最佳單篇數值不能當作穩定合併估計。',
+      'FAI 研究中 IROP 最高 Sn 91%；FADIR 最高 Sp 僅 47%。',
+      '關節唇研究中 FADIR 最高 Sn 與 FABER 最高 Sp 可達 100%，但來自不同研究與參考標準。',
+    ],
+    limitations: '病灶定義、MRI／關節鏡參考標準與轉介光譜不同；不能用單一最高值宣稱確診能力。',
   },
   gtps2024: {
     id: 'gtps2024',
@@ -140,6 +269,14 @@ export const peSources: Record<string, PeSource> = {
     url: 'https://pubmed.ncbi.nlm.nih.gov/37561820/',
     evidence: 'moderate',
     context: '建議用大轉子觸診加 resisted abduction 的 sequential cluster，而非單一測試。',
+    design: 'GTPS 診斷測試系統性回顧與統合分析（QUADAS-2、GRADE）',
+    sample: '6 項研究、272 人／314 髖，評估 15 種測試。',
+    takeaways: [
+      '外側髖痛族群的研究 pre-test probability 為 59%。',
+      '大轉子觸診陰性後再加 resisted abduction 陰性，可降至 14%。',
+      '兩項皆陽性可升至 96%，顯示序列 cluster 比單項實用。',
+    ],
+    limitations: '整體證據從極低到中等；上述 post-test probability 取決於研究中的 59% 起始機率。',
   },
   trendelenburg2001: {
     id: 'trendelenburg2001',
@@ -147,6 +284,13 @@ export const peSources: Record<string, PeSource> = {
     url: 'https://pubmed.ncbi.nlm.nih.gov/11592379/',
     evidence: 'low',
     context: '樣本很小且為 MRI／手術選擇族群。',
+    design: '前瞻性理學檢查與 MRI 比較研究',
+    sample: '24 位有 GTPS 臨床表現的女性，年齡中位數 58 歲；11 人有 gluteus medius tear。',
+    takeaways: [
+      'Trendelenburg 對 gluteus medius tear：Sn 72.7%、Sp 76.9%。',
+      '同一檢查者重測 κ 0.676，屬可接受一致性。',
+    ],
+    limitations: '全女性、樣本極小、以 GTPS 篩選後再做 MRI；不代表一般未篩選髖痛族群。',
   },
   acl2022: {
     id: 'acl2022',
@@ -154,6 +298,14 @@ export const peSources: Record<string, PeSource> = {
     url: 'https://pubmed.ncbi.nlm.nih.gov/35150292/',
     evidence: 'moderate',
     context: '急慢性、完整／部分撕裂混合；結果會受 guarding 與檢查者經驗影響。',
+    design: 'ACL 理學檢查系統性回顧與雙變量統合分析',
+    sample: '納入無合併其他膝韌帶損傷、可有半月板損傷的研究。',
+    takeaways: [
+      'Anterior drawer：Sn 83%（77–88）、Sp 85%（64–95）。',
+      'Lachman：Sn 81%（73–87）、Sp 85%（73–92）。',
+      'Pivot shift：Sn 55%（47–62）、Sp 94%（88–97）；陽性較能 rule in。',
+    ],
+    limitations: 'Lachman 在完整撕裂與 post-acute 子群的準確度低於過去認知；急性與部分撕裂仍需更多研究。',
   },
   meniscus2015: {
     id: 'meniscus2015',
@@ -161,6 +313,14 @@ export const peSources: Record<string, PeSource> = {
     url: 'https://pubmed.ncbi.nlm.nih.gov/25724195/',
     evidence: 'low',
     context: '研究品質與異質性限制明顯，尤其高盛行率轉介族群。',
+    design: '成人半月板特殊測試系統性回顧與統合分析',
+    sample: '9 項研究、1,234 人。',
+    takeaways: [
+      'McMurray：Sn 61%（45–74）、Sp 84%（69–92）。',
+      'Joint-line tenderness：Sn 83%（73–90）、Sp 83%（61–94）。',
+      'Thessaly 20°：Sn 75%（53–89）、Sp 87%（65–96）。',
+    ],
+    limitations: '納入研究整體品質差、研究數少且異質性高；作者認為整體準確度仍不理想。',
   },
   patellofemoral2013: {
     id: 'patellofemoral2013',
@@ -168,6 +328,14 @@ export const peSources: Record<string, PeSource> = {
     url: 'https://pubmed.ncbi.nlm.nih.gov/23232069/',
     evidence: 'low',
     context: '多數測試只有有限似然比資料，沒有可穩定外推的 Sn／Sp 點估計。',
+    design: '髕股疼痛臨床與功能測試系統性回顧',
+    sample: '16,169 筆候選中僅 5 項研究符合條件，共評估 25 種測試。',
+    takeaways: [
+      'Patellar tilt 的 LR+ 5.4、LR− 0.6，陽性可能增加支持度。',
+      'Squat 的 LR+ 1.8、LR− 0.2，陰性可能較有排除價值。',
+      '兩者都未達作者預設的明確診斷證據門檻。',
+    ],
+    limitations: '只有 1 項高品質、2 項良好及 2 項低品質研究；測試定義與樣本缺乏標準化。',
   },
   ankle2021: {
     id: 'ankle2021',
@@ -175,6 +343,14 @@ export const peSources: Record<string, PeSource> = {
     url: 'https://pubmed.ncbi.nlm.nih.gov/34286639/',
     evidence: 'moderate',
     context: '以急性扭傷研究為主；本工具僅在重大急性外傷已排除後提供補充判讀。',
+    design: '踝／距下韌帶臨床測試系統性回顧與統合分析',
+    sample: '14 項研究、6,302 次觀察、9 種臨床測試。',
+    takeaways: [
+      'ATFL palpation：Sn 95–100%、Sp 0–32%，適合敏感篩檢但不適合單獨確診。',
+      'Anterior drawer 合併 Sn 54%（35–71）、Sp 87%（63–96）。',
+      '建議用 ATFL palpation 協助 rule out，再用 anterior drawer 增加 rule-in 支持。',
+    ],
+    limitations: '盲法與研究品質報告不足；急性扭傷結果不等於慢性踝不穩定的固定表現。',
   },
   achilles2014: {
     id: 'achilles2014',
@@ -182,6 +358,13 @@ export const peSources: Record<string, PeSource> = {
     url: 'https://pubmed.ncbi.nlm.nih.gov/25243736/',
     evidence: 'moderate',
     context: 'calf-squeeze 對完全斷裂表現佳；部分撕裂或慢性病灶可能不同。',
+    design: 'Achilles injury 臨床測試系統性回顧與統合分析',
+    sample: '只有 3 項原始研究符合條件。',
+    takeaways: [
+      'Calf-squeeze／Thompson 在納入資料中最高 Sn 96%、Sp 93%。',
+      'Achilles tendinopathy 的 arc sign、觸診與 Royal London Hospital test 整體較偏 rule in，表現不如完全斷裂測試穩定。',
+    ],
+    limitations: '來源研究極少；完全斷裂的高準確度不能直接外推到部分、陳舊撕裂或疼痛性肌腱病變。',
   },
   achillesPain2013: {
     id: 'achillesPain2013',
@@ -189,6 +372,13 @@ export const peSources: Record<string, PeSource> = {
     url: 'https://pubmed.ncbi.nlm.nih.gov/23548453/',
     evidence: 'low',
     context: '單一運動醫學族群；觸診位置與症狀定義影響結果。',
+    design: '以超音波為參考的單一診斷準確度與重現性研究',
+    sample: '21 位有或無中段 Achilles tendinopathy 的受試者，共評估 10 種臨床測試。',
+    takeaways: [
+      '肌腱疼痛觸診：Sn 84%、Sp 73%，κ 0.74–0.96。',
+      '主觀疼痛位於跟骨附著點上方 2–6 cm：Sn 78%、Sp 77%。',
+    ],
+    limitations: '樣本非常小且是單一場域；適用於慢性中段病變，不等於 insertional pain 或 rupture。',
   },
   windlass2003: {
     id: 'windlass2003',
@@ -196,6 +386,14 @@ export const peSources: Record<string, PeSource> = {
     url: 'https://pubmed.ncbi.nlm.nih.gov/12793489/',
     evidence: 'low',
     context: '樣本小；負重版本特異度高但敏感度低。',
+    design: '負重與非負重 Windlass test 診斷比較研究',
+    sample: '22 位 plantar fasciitis、23 位其他足痛、30 位無症狀對照。',
+    takeaways: [
+      '負重 Windlass 在 plantar fasciitis 組 7／22 陽性（Sn 31.8%）。',
+      '其他足痛與對照組皆未因測試出現足底痛（研究內 Sp 100%）。',
+      '陽性可支持 plantar fasciopathy；陰性常見，不能排除。',
+    ],
+    limitations: '樣本小且估計不精確；研究年代較早，病例定義與現代 plantar heel pain 分類可能不同。',
   },
   general: {
     id: 'general',
@@ -211,6 +409,12 @@ export const peRegions: PeRegion[] = [
     name: '頸部／頸因性頭痛',
     shortName: '頸部',
     hint: '先看神經學與頸髓警訊，再區分神經根、頸因性頭痛與機械性頸痛。',
+    illustration: {
+      src: '/pe/cervical-spurling.webp',
+      alt: '醫師在坐姿病人後方進行 Spurling test 的原創操作示意',
+      title: '代表操作：Spurling test',
+      caption: '頸部伸展、患側側彎／旋轉後輕柔軸向加壓；只有重現熟悉手臂放射痛才算典型陽性。',
+    },
     diagnoses: [
       { id: 'cervical-radiculopathy', name: '頸神經根病變', conditionId: 'cervical-radiculopathy' },
       { id: 'cervicogenic-headache', name: '頸因性頭痛', conditionId: 'cervicogenic-headache' },
@@ -233,6 +437,12 @@ export const peRegions: PeRegion[] = [
     name: '肩膀',
     shortName: '肩膀',
     hint: '先分 AROM／PROM、頸源轉介與明顯無力，再用特殊測試形成組合。',
+    illustration: {
+      src: '/pe/shoulder-hawkins.webp',
+      alt: '醫師穩定病人肩肘並進行 Hawkins-Kennedy test 的原創操作示意',
+      title: '代表操作：Hawkins–Kennedy test',
+      caption: '肩與肘屈曲 90°後被動內旋；重現熟悉前外側肩痛才算陽性，不能指認單一組織。',
+    },
     diagnoses: [
       { id: 'rotator-cuff-related', name: '旋轉肌袖相關肩痛', conditionId: 'rotator-cuff' },
       { id: 'full-thickness-cuff', name: '全層旋轉肌袖撕裂', conditionId: 'rotator-cuff-tear' },
@@ -259,6 +469,12 @@ export const peRegions: PeRegion[] = [
     name: '手肘',
     shortName: '手肘',
     hint: '用疼痛位置、抗阻方向與神經分布分流；急性創傷或明顯伸肘缺損不進此流程。',
+    illustration: {
+      src: '/pe/elbow-cozen.webp',
+      alt: '醫師固定病人手肘並對伸腕施加阻力的 Cozen test 原創示意',
+      title: '代表操作：Cozen test',
+      caption: '肘屈、前臂旋前，讓病人伸腕並輕度橈偏抗阻；外上髁熟悉痛才支持 lateral elbow tendinopathy。',
+    },
     diagnoses: [
       { id: 'lateral-elbow', name: '外側肘肌腱病變', conditionId: 'lateral-elbow' },
       { id: 'medial-elbow', name: '內側肘肌腱病變', conditionId: 'medial-elbow' },
@@ -283,6 +499,12 @@ export const peRegions: PeRegion[] = [
     name: '手腕／手',
     shortName: '手腕手',
     hint: '先定位橈側、尺側或神經分布，再用誘發測試；急性舟狀骨或其他骨折疑慮先轉出。',
+    illustration: {
+      src: '/pe/wrist-phalen.webp',
+      alt: '病人雙手背相貼並完全屈腕進行 Phalen test 的原創操作示意',
+      title: '代表操作：Phalen test',
+      caption: '雙腕屈曲、手背相貼維持至多 60 秒；正中神經分布的熟悉麻痛才算典型陽性。',
+    },
     diagnoses: [
       { id: 'carpal-tunnel', name: '腕隧道症候群', conditionId: 'carpal-tunnel' },
       { id: 'dequervain', name: 'De Quervain 腱鞘炎', conditionId: 'dequervain' },
@@ -308,6 +530,12 @@ export const peRegions: PeRegion[] = [
     name: '上背／胸椎／肋骨',
     shortName: '上背',
     hint: '胸椎痛先排除心肺、感染、骨折與神經學來源；局部 PE 的組織特異度有限。',
+    illustration: {
+      src: '/pe/thoracic-rotation.webp',
+      alt: '醫師穩定骨盆並引導病人坐姿胸椎旋轉的原創操作示意',
+      title: '代表操作：坐姿胸椎旋轉',
+      caption: '雙臂交叉、骨盆維持朝前，再比較左右胸椎旋轉與症狀；避免用腰椎或骨盆代償。',
+    },
     diagnoses: [
       { id: 'mechanical-thoracic', name: '機械性胸椎痛', conditionId: 'thoracic-pain' },
       { id: 'costovertebral', name: '肋椎／肋橫突關節相關痛' },
@@ -329,6 +557,12 @@ export const peRegions: PeRegion[] = [
     name: '下背／薦髂',
     shortName: '下背',
     hint: '先做神經學與馬尾警訊，再區分神經根、椎管狹窄、SIJ、髖源與非特異性下背痛。',
+    illustration: {
+      src: '/pe/lumbar-slr.webp',
+      alt: '病人仰臥、醫師抬高伸直下肢進行 straight-leg raise 的原創操作示意',
+      title: '代表操作：Straight-leg raise',
+      caption: '膝伸直下逐步抬腿，記錄熟悉腿部放射症狀並做結構分化；只有後腿拉緊不算典型陽性。',
+    },
     diagnoses: [
       { id: 'lumbar-radiculopathy', name: '腰椎神經根病變', conditionId: 'lumbar-radiculopathy' },
       { id: 'lumbar-stenosis', name: '腰椎管狹窄／神經性跛行', conditionId: 'lumbar-stenosis' },
@@ -355,6 +589,12 @@ export const peRegions: PeRegion[] = [
     name: '髖／骨盆',
     shortName: '髖部',
     hint: '先比較髖活動度與腰椎來源，再分關節內、GTPS、肌腱與深臀區。',
+    illustration: {
+      src: '/pe/hip-fadir.webp',
+      alt: '病人仰臥、醫師將屈曲髖帶入內收與內旋進行 FADIR 的原創操作示意',
+      title: '代表操作：FADIR',
+      caption: '屈髖約 90°後內收與內旋；重現熟悉腹股溝／深髖痛才算陽性，陽性不能單獨診斷 FAI。',
+    },
     diagnoses: [
       { id: 'hip-oa', name: '髖關節退化性關節炎', conditionId: 'hip-oa' },
       { id: 'gtps', name: '大轉子疼痛症候群', conditionId: 'gtps' },
@@ -382,6 +622,12 @@ export const peRegions: PeRegion[] = [
     name: '膝蓋',
     shortName: '膝蓋',
     hint: '先看腫脹、伸直缺損與負重能力，再依不穩、關節線、前膝或肌腱負荷分流。',
+    illustration: {
+      src: '/pe/knee-lachman.webp',
+      alt: '醫師固定股骨並前移近端脛骨進行 Lachman test 的原創操作示意',
+      title: '代表操作：Lachman test',
+      caption: '膝屈約 20–30°，固定股骨後將脛骨向前帶；與對側比較位移與終末感。',
+    },
     diagnoses: [
       { id: 'acl', name: 'ACL 損傷' },
       { id: 'pcl', name: 'PCL 損傷' },
@@ -411,6 +657,12 @@ export const peRegions: PeRegion[] = [
     name: '腳踝／足部',
     shortName: '足踝',
     hint: '重大急性外傷先排除；再分外側韌帶、Achilles、足底筋膜、肌腱與 syndesmosis。',
+    illustration: {
+      src: '/pe/ankle-anterior-drawer.webp',
+      alt: '醫師固定小腿並將跟骨與距骨向前帶進行 ankle anterior drawer 的原創操作示意',
+      title: '代表操作：Ankle anterior drawer',
+      caption: '踝略蹠屈，固定脛骨並將跟骨／距骨向前帶；比較兩側位移與終末感。',
+    },
     diagnoses: [
       { id: 'lateral-ankle', name: '外側踝韌帶損傷／不穩定', conditionId: 'ankle-sprain' },
       { id: 'syndesmosis', name: '高位踝扭傷／syndesmosis' },

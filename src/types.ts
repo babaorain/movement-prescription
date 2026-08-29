@@ -210,6 +210,21 @@ export type PeSource = {
   url?: string
   evidence: PeEvidenceLevel
   context: string
+  /** 研究設計與納入來源，供卡片內直接閱讀。 */
+  design?: string
+  /** 研究樣本或臨床族群；摘要未提供時明確標示。 */
+  sample?: string
+  /** 以繁體中文轉述的主要結果，不複製受版權保護的原文。 */
+  takeaways?: string[]
+  /** 會影響外推或判讀的主要限制。 */
+  limitations?: string
+}
+
+export type PeIllustration = {
+  src: string
+  alt: string
+  title: string
+  caption: string
 }
 
 export type PeAccuracy = {
@@ -250,6 +265,7 @@ export type PeRegion = {
   name: string
   shortName: string
   hint: string
+  illustration: PeIllustration
   diagnoses: PeDiagnosis[]
   tests: PeTest[]
 }
