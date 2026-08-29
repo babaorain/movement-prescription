@@ -66,6 +66,9 @@ export function validateData(): string[] {
 
   for (const region of peRegions) {
     const diagnosisIds = new Set(region.diagnoses.map((diagnosis) => diagnosis.id))
+    if (!region.illustration.src.startsWith('/pe/') || !region.illustration.alt || !region.illustration.caption) {
+      problems.push(`PE 部位缺少站內操作示意：${region.id}`)
+    }
     if (region.tests.filter((test) => test.quick).length < 4) problems.push(`PE 快速模式少於 4 項：${region.id}`)
     if (region.tests.length < 6) problems.push(`PE 完整模式少於 6 項：${region.id}`)
     for (const diagnosis of region.diagnoses) {
@@ -80,6 +83,13 @@ export function validateData(): string[] {
       for (const target of test.targets) {
         if (!diagnosisIds.has(target)) problems.push(`PE 測試指向其他部位或不存在的 DD：${test.id} → ${target}`)
       }
+    }
+  }
+
+  for (const source of Object.values(peSources)) {
+    if (!source.url) continue
+    if (!source.design || !source.sample || !source.limitations || (source.takeaways?.length ?? 0) < 2) {
+      problems.push(`PE 外部來源缺少站內研究摘要：${source.id}`)
     }
   }
 

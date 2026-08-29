@@ -16,7 +16,7 @@ import {
   X,
 } from 'lucide-react'
 import { peRegions, peSources } from '../data/physical-exams'
-import type { PeDiagnosis, PeRegionId, PeResult, PeTest } from '../types'
+import type { PeDiagnosis, PeRegionId, PeResult, PeSource, PeTest } from '../types'
 import { DoctorTopbar, type DoctorView } from './DoctorTopbar'
 
 type ExamMode = 'quick' | 'full'
@@ -76,6 +76,40 @@ function resultLabel(result: PeResult | undefined): string {
   if (result === 'positive') return '陽性'
   if (result === 'negative') return '陰性'
   return '未做'
+}
+
+function SourceEvidence({ source }: { source: PeSource }) {
+  if (!source.takeaways?.length) {
+    return (
+      <div className="pe-source pe-source--unavailable">
+        <span><b>{source.label}</b><small>{evidenceLabels[source.evidence]}・{source.context}</small></span>
+      </div>
+    )
+  }
+
+  return (
+    <section className="pe-source-note" aria-label={`${source.label}站內研究摘要`}>
+      <div className="pe-source-note__heading">
+        <BookOpen aria-hidden="true" />
+        <span>
+          <small>站內研究重點・{evidenceLabels[source.evidence]}</small>
+          <b>{source.label}</b>
+        </span>
+      </div>
+      <dl className="pe-source-note__meta">
+        {source.design && <div><dt>設計</dt><dd>{source.design}</dd></div>}
+        {source.sample && <div><dt>樣本</dt><dd>{source.sample}</dd></div>}
+      </dl>
+      <ul>
+        {source.takeaways.map((takeaway) => <li key={takeaway}>{takeaway}</li>)}
+      </ul>
+      {source.limitations && <p className="pe-source-note__limits"><AlertTriangle aria-hidden="true" /><span><b>外推限制</b>{source.limitations}</span></p>}
+      <div className="pe-source-note__footer">
+        <small>中文重點依研究摘要整理，非逐字翻譯；數值須連同研究族群與 reference standard 判讀。</small>
+        {source.url && <a href={source.url} target="_blank" rel="noreferrer">核對原文 <ExternalLink aria-hidden="true" /></a>}
+      </div>
+    </section>
+  )
 }
 
 export function PhysicalExam({ onNavigate }: { onNavigate: (view: DoctorView) => void }) {
@@ -240,6 +274,16 @@ export function PhysicalExam({ onNavigate }: { onNavigate: (view: DoctorView) =>
 
                 <div className="pe-sequence-note"><Info /><span>建議依序完成。<b>Sn 高的陰性結果</b>較能降低可能性，<b>Sp 高的陽性結果</b>較能增加支持度；數字不會把 pre-test probability 自動變成診斷。</span></div>
 
+                <figure className="pe-region-visual">
+                  <div className="pe-region-visual__image">
+                    <img src={region.illustration.src} alt={region.illustration.alt} decoding="async" />
+                  </div>
+                  <figcaption>
+                    <span><small>原創臨床示意・操作仍以文字為準</small><b>{region.illustration.title}</b></span>
+                    <p>{region.illustration.caption}</p>
+                  </figcaption>
+                </figure>
+
                 <div className="pe-test-list">
                   {visibleTests.map((test, index) => {
                     const source = peSources[test.sourceId]
@@ -276,15 +320,7 @@ export function PhysicalExam({ onNavigate }: { onNavigate: (view: DoctorView) =>
                               <p>{test.accuracy.note ?? source.context}</p>
                             </div>
                             {test.caution && <p className="pe-test__caution"><AlertTriangle />{test.caution}</p>}
-                            {source.url ? (
-                              <a className="pe-source" href={source.url} target="_blank" rel="noreferrer">
-                                <span><b>{source.label}</b><small>{evidenceLabels[source.evidence]}・{source.context}</small></span><ExternalLink />
-                              </a>
-                            ) : (
-                              <div className="pe-source pe-source--unavailable">
-                                <span><b>{source.label}</b><small>{evidenceLabels[source.evidence]}・{source.context}</small></span>
-                              </div>
-                            )}
+                            <SourceEvidence source={source} />
                           </div>
                         </details>
                         <div className="pe-test__actions" role="group" aria-label={`${test.name}結果`}>
